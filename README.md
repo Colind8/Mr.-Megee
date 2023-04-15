@@ -8,6 +8,6 @@ Issues are created for "todo" items on the Mr. Megee Development board. You can 
 ### Projects
 This will link to the Mr. Megee Development Board where you can track what's going on with Mr. Megee
 ### Wiki
-I plan to use this soon
+I plan to use this soon.
 ### Discussions
 Ask questions and more here.
