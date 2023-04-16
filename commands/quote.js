@@ -38,7 +38,7 @@ module.exports = {
             }
             dataobj.data.push(poop); // Push the object to the array
             let a = JSON.stringify(dataobj); // Convert the javascript object to json string
-            fs.writeFileSync("quote.txt", a); // Replace the old data with the new string
+            fs.writeFileSync("./resources/quote.txt", a); // Replace the old data with the new string
             return message.channel.send("Quote Created!\n\n*\"" + arg + "\"*\n-" + message.author.username);
         }
         
