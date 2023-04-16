@@ -1,0 +1,19 @@
+{
+  "name": "VirtualFeistyProgrammingmacro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@discordjs/voice": "^0.14.0",
+    "@replit/database": "^2.0.1",
+    "discord.js": "^13.12.0",
+    "node-fetch": "^2.6.7",
+    "sqlite3": "^5.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

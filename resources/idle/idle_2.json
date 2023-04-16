@@ -1,0 +1,1061 @@
+{
+	"version": 2,
+    "info": {
+        "author": "Mr. Megee presents...",
+        "title": "The Mr. Megee Idle Game!",
+        "thumbnail": "https://media.discordapp.net/attachments/510953636084449316/874867231094349894/info_spider.png",
+        "body": "*Oh no you're a spider, and you're stuck in the middle of the woods! You need to build a humanator to return back to your usual self!*\n\nEvery message you send earns you XP. Convert that XP to coins to buy things from the shop OR gain enough XP to level up. Each level up lets you earn a perk which do more varied things than the items in the shop. \n\nYour goal is to gather enough XP to complete your current task. Once you reach the level needed, you can prestige which will reset everything but advance you through the construction process.",
+        "fields": [
+            {
+                "name": "Want to play?",
+                "description": "Type `xd)idle play` to create your profile and get started"
+            },
+            {
+                "name": "Note!",
+                "description": "This is an idle game. There's no need to quickly earn XP fast by spamming and annoying everyone. Just earn it naturally and don't think about the game until it's time to think about it!"
+            }
+        ]
+    },
+    "help": {
+        "title": "The Mr. Megee Idle Game: HELP",
+        "thumbnail": "https://cdn.discordapp.com/attachments/875265776305721395/875268199577432064/help_spider2.png",
+        "body": "Every message you send earns you XP. Convert that XP to coins to buy things from the shop OR gain enough XP to level up. Each level up lets you earn a perk which do more varied things than the items in the shop.\n\nYour goal is to gather enough XP to complete your current task. Once you reach the level needed, you can prestige which will reset everything but advance you through the construction process.",
+        "fields": [
+            {
+                "name": "Commands",
+                "description": "`xd)idle help` Shows a list of commands\n`xd)idle convert [num]` convert an amount of XP to Coins\n`xd)idle shop` View the shop\n`xd)idle stats` View your stats, perks, and progress\n`xd)idle prestige` Activate your prestige if it's ready (check stats for progress)\n`xd)idle perk` View perk menu\n`xd)idle tree` View your Prestige Upgrade Tree\n`xd)idle settings` Configure your experience"
+            },
+			{
+				"name": "Unlocked Commands",
+				"commands": [
+					"`xd)idle bank` View your bank balance, make withdraws, make deposits, etc.",
+					"`xd)idle stock` View the stock market. Buy and sell stocks.",
+					"`xd)idle meditate` Meditate and automatically earn XP over time.",
+					"`xd)idle pawn` Sell items you randomly find.",
+					"`xd)idle casino` Visit the Mr. Megee Casino.",
+					"`xd)idle journal` View past prestige icons, messages, and splash text."
+				]
+			}
+        ]
+    },
+    "prestige": [
+        {
+            "name":"Research",
+            "thumbnail":"https://media.discordapp.net/attachments/875265776305721395/875265986834628628/01.png",
+            "lore":"*You immediately get to work on Research and Development.*",
+            "status": [
+                "\"Hmm. A little this.. A little that...\"",
+                "You pour the red potion into the blue potion to make a purple potion.",
+                "\"Ah. So that's how that works.\"",
+                "The potion explodes in your face.",
+                "You're trying to conjure up a grow potion but swiftly realize magic isn't real",
+                "R-R-R-RAW SCIENCE!",
+                "\"I know! I need to change back into a human!\"",
+				"You meet a beetle named Henry. You get along with him well."
+            ]
+        },
+        {
+            "name":"Planning",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884382458613760/02.png",
+            "lore":"*Research has concluded and now it's time to start planning.*",
+            "status": [
+                "\"Hm. Carry the 2, cancel those out. Aha!\"",
+                "You carve out your plans on the side of a log",
+                "Measurements are made based on the size of a leaf.",
+                "A predator attacked you while you were planning. You had to hide the entire night.",
+                "You use your smarts to make something cooler than a grow potion.",
+                "You spend so much time planning that you forgot to eat.",
+                "You use all 6 of your legs.",
+                "You draw a smiley face on your \"blueprints.\"",
+                "\"I call it. THE HUMANATOR!\"",
+                "Local wildlife wonder how you're gonna fit a person in a 5cm capsule.",
+				"Henry is making these troubling times a little easier"
+            ]
+        },
+        {
+            "name":"Gather wood",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884385218490409/03.png",
+            "lore":"*Planning concluded. First you need to gather wood for some tools.*",
+            "status": [
+                "You use the power of your fist to gather wood.",
+                "Punching wood hurts, so you just pick up twigs instead.",
+                "A local wood-eater eats all your wood!",
+                "It's just like a survial videogame! wait.",
+                "\"Where'd my wood go?\"",
+                "You create a crafting table with your wood.",
+                "Wood would. Would Wood?",
+                "A mighty tree, 4000x your height, stands tall before you. Time to get to work.",
+                "You meet a fellow carpenter ant. He seemed friendly.",
+                "You find a log with several catacombs and an extended story, but you don't have disk 32 to access it.",
+				"Henry gives you a nice ounce of orange juice."
+            ]
+        },
+        {
+            "name":"Create tools",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884388636852244/04.png",
+            "lore":"*Now that you got plenty of wood, you must create tools to help you with construction.*",
+            "status": [
+                "You craft an epic sword!",
+                "You craft a killer bow!",
+                "You craft a neat fishing pole!",
+                "You craft a wicked pickaxe!",
+                "You craft a mighty axe!",
+                "You craft a sharp pitchfork!",
+                "You craft a godly shovel!",
+                "You craft a powerful hammer!",
+                "You craft masterful shears",
+                "You craft a uhh.. just a hoe.",
+                "You craft a robust pulley!",
+                "You craft a very useful tool that is used for like two things."
+            ]
+        },
+        {
+            "name":"Automate the process",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884391887425667/05.png",
+            "lore":"*With your new tools, now you can automate the process. What process? Err I don't know.*",
+            "status": [
+                "You create something straight from a Dr. Suess book.",
+                "You get distracted making a factory for five days without stopping.",
+                "The process... AUTOMATED.",
+                "Automation is key towards increasing production.",
+                "You decide to be lazy by having robots do work for you.",
+                "You build robots that automatically build robots to automatically build robots.",
+                "You feel satisfactory in your factoriork.",
+                "You spend eight hours optimizing your production ratios.",
+				"Henry gives some tips."
+            ]
+        },
+        {
+            "name":"Mine for minerals",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884395951689799/06.png",
+            "lore":"*You're going to need some minerals for construction, there's a cave nearby you can use to go deep.*",
+            "status": [
+                "You go mining at night. Big mistake.",
+                "You mine some copper.",
+                "You mine some iron.",
+                "You find an abandoned mineshaft.",
+                "You fall into a cramped pit.",
+                "You mine some silver.",
+                "You mine some tin.",
+                "You struck gold!",
+                "You get lost in a cave.",
+                "Your pickaxe breaks",
+                "You find an underground dungeon.",
+                "You find a lost girl and decide to help her.",
+				"Henry helps you find nearby caves."
+            ]
+        },
+        {
+            "name":"Smelt ingots",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884399634288710/07.png",
+            "lore":"*With your newly aquired ores, you'll need to smelt them into ingots to be able to use them effectively.*",
+            "status": [
+                "The ores are smelting",
+                "Every game needs smelting I guess",
+                "You accidently spill molten iron on yourself.",
+                "You get a low score on Forging and Hammering",
+                "Smithing increased to 27",
+                "It is very hot.",
+                "You work up a sweat.",
+                "Is it in-got or in-get?",
+				"Henry tells some jokes to pass the time."
+            ]
+        },
+        {
+            "name":"Construct Shell",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884403304333322/08.png",
+            "lore":"*Now it's time to actually start construction. First you must build the shell of the Humanator.*",
+            "status": [
+                "You use tree sap as glue.",
+                "You forgot to flip the canvas and now it's unsymmetrical.",
+                "\"Wow! This is so boring.\"",
+                "A squirrel destroys your scaffolding.",
+                "You are building the shell of the humanator. Just wanted to remind you.",
+                "You take a break by flirting with a Wolf spider.",
+                "A human child running away from a serial killer knocks over your site.",
+                "The tree sap isn't very strong.",
+                "An ant complains about all the noise.",
+				"Henry goes off on his own for a while."
+            ]
+        },
+        {
+            "name":"Create glass",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884406378745898/09.png",
+            "lore":"*Wait you forgot glass, go create some real quick!*",
+            "status": [
+                "You search everywhere for sand.",
+                "There's like no sand anywhere around here.",
+                "You need sand to create glass!",
+                "All you see is dirt, grass, and other plants.",
+                "Your plan is falling apart, there's no sand for glass.",
+                "You check your mineshaft... Nope. No sand.",
+                "\"How can something as simple as this be so difficult?\"",
+                "Mr. Bug says, \"Don't be sad! I'm sure you'll find sand!\"",
+                "You lose hours of sleep trying to find glass.",
+                "You find sand but a spider building the exact same thing takes it before you.",
+				"Henry brings back some materials, unforuntately none of it was sand."
+            ]
+        },
+        {
+            "name":"Solder Circuits",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884410002636830/10.png",
+            "lore":"*You actually found sand in a sandbox and you create the glass! Time for the grueling process of soldering!*",
+            "status": [
+                "How are you soldering? Hell if I know.",
+                "You connect one wire to another.",
+                "You realize this is no different from your spidernator.",
+                "Electronics are fun.",
+                "A local ant is so confused by what you're doing that he thinks you're god.",
+                "You... solder circuits...",
+                "You wish you could listen to music while doing this.",
+                "You forgot to sleep and you fainted on top your circuits.",
+                "An electrostatic discharge occurred and ruined all your progress.",
+				"You wake up to find Henry is no where to be found."
+            ]
+        },
+        {
+            "name":"Wiring",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884413098000414/11.png",
+            "lore":"*Now you gotta connect everything together.*",
+            "status": [
+                "You connect the red wire to the junction box.",
+                "You cut the blue wire.",
+                "Your wires get tangled.",
+                "You accidently shock yourself... Somehow",
+                "You forgot what that wire did. Oh well, it's there now.",
+                "You contemplate connecting the blue and red wires.",
+                "You caught a mouse chewing some of your wires.",
+                "It begins raining and you were not prepared for the coming flood.",
+                "\"Hmm. This to uhh this! and you to YOU!\"",
+                "A bird shits on the humanator. <:MrMegee:548374425771442176>",
+                "In a moment of weakness, you connect the red and green wires.",
+				"After a close dung inspection, you realize you had accidently eaten Henry."
+            ]
+        },
+        {
+            "name":"Construct Tube",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884433192923176/12.png",
+            "lore":"*Might as well take a break from electronics by constructing the glass tube the subject will sit in.*",
+            "status": [
+                "You realize a person might not fit in a 5cm tube.",
+                "You create the tube, but accidently drop it. It shatters into a million pieces.",
+                "This reminds you of when you were first researching.",
+                "It's actually really backbreaking for a spider.",
+                "Tube.",
+                "You're visited by a wandering trader. He sells you a piece of an apple.",
+                "You encounter a wild hedgehog. It randomly changes color after eating a few worms and a weed."
+            ]
+        },
+        {
+            "name":"Create Input Systems",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884444857290763/13.png",
+            "lore":"*You'll need a way to actually activate your machine, a simple button should do the trick.*",
+            "status": [
+                "You spend five months making a button."
+            ]
+        },
+        {
+            "name":"Gather Human",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884449752047627/14.png",
+            "lore":"*You need a subject to transform your body. This won't be pretty.*",
+            "status": [
+                "You contemplate what you're about to do.",
+                "You're knife- err needle- is ready.",
+                "Just one person. One human. One life.",
+                "Your life at the cost of another.",
+                "You realize it'll be difficult cramming a body into a 5cm tube.",
+                "All the pain and suffering comes down to this.",
+                "You see a spider vaccumed by a human. How we are alike.",
+                "It has to be done, you say.",
+                "It'll all be over soon.",
+                "...",
+				"All of this reminds you of a friend once forgotten. Met with a similar fate."
+            ]
+        },
+        {
+            "name":"Activation",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884454609027072/15.png",
+            "lore":"*With the \\*(ahem)\\* subject in place, it's time to actually activate the machine! This is the home stretch!*",
+            "status": [
+                "You feel your molecules re-arranging.",
+                "Finally you will be back to your regular self, but at what cost?",
+                "BEEZZOOOSSSHOOOOSHOSHOHOOO.",
+                "WOOSHOOOWOOSHHH",
+                "It's actually really painful.",
+                "You feel you are losing some limbs.",
+                "You wonder what you'll do after you're human again...",
+                "You hope you made the right decision.",
+                "Finally, you will return to your true form.",
+                "How long did this take???"
+            ]
+        },
+        {
+            "name":"Finally Human! Thanks for playing!",
+            "thumbnail":"https://media.discordapp.net/attachments/875265776305721395/896983455047503872/16.png",
+            "lore":"*You finally become human! However, the game's not over yet. You are now in the NG+*",
+            "status": [
+                "You are finally human",
+                "You look down at what you've accomplished. A tiny machine with human remains in a tube",
+                "You try to dance, but something feels off.",
+                "How did this happen anyways?",
+                "You were small and now you're not.",
+                "You feel as though the adventure has only just begun."
+            ]
+        },
+        {
+            "name":"Revenge",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983463037636628/17.png",
+            "lore":"*Why did this happen? The cruel events from before your spiderification crawl back into your mind. You feel nothing but anger. Your sanity has been lost. You don't even know how long you spent trying to return to normal.*",
+            "status": [
+                "Your mind is filled with rage.",
+                "A vague figure of the one who caused this pain fogs your memory",
+                "You are unable to eat.",
+                "You cannot sleep.",
+                "You've forgotten where you live.",
+                "The memories of your past are too great for you to properly function.",
+                "These incapabilities may be solved if you find the source of your anger."
+            ]
+        },
+        {
+            "name":"The Hunt",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983468066615296/18.png",
+            "lore":"*Now you remember. The project. The doctorate. The greed. It was all him. You don't even know his name.*",
+            "status": [
+                "You remember what he looks like. A student, just like you were.",
+                "Walking around, you notice things are different. How long were you gone?",
+                "Spiders.",
+                "You talk to local residents. Nobody remembers you.",
+                "Your home was repossesed.",
+                "You recall the days you had fighting off birds trying to eat you. Not much has changed.",
+                "You scour through some newspapers. Things are very different in your town.",
+                "You describe your situation to someone. They think you're crazy."
+            ]
+        },
+        {
+            "name":"Preparations",
+            "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983473645027358/19.png",
+            "lore":"*After gathing the clues. You now know who did this to you. He lives in a castle he bought a few miles from here. It's pretty big actually. You're not sure how you missed it. Anyways... You need to make preparations to confront this monster.*",
+            "status": [
+                "You take a sword instead instead of a gun because it's cooler.",
+                "You find your glasses and regain your sense of sight. Very critical for what you're about to do.",
+                "You punch a punching bag. It uhh doesn't move.",
+                "You lift weights while thinking. The camera zooms into your face an-",
+                "Wow you're really going to go kill the person who ruined your life.",
+                "A police officer asks what you're doing. You manage to outrun him.",
+                "You notice that lightning regularly strikes his castle even when it's not raining."
+            ]
+        },
+		{
+			"name":"Ready",
+			"thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983478275547156/20.png",
+			"lore":"*You are now ready to face the great evil. It is a long journey, a full one and a half hours.*",
+            "status": [
+                "Your back really hurts.",
+                "You stomp your way through forestry.",
+                "You defeat treacherous beasts in your way.",
+                "You take a detour to quickly save a princess.",
+                "You grind a bit for some XP.",
+                "You take a small break to drink water.",
+                "Your worries grow the closer you get."
+            ]
+		},
+		{
+			"name":"Storming the Castle",
+			"thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983483531026483/21.png",
+			"lore":"*You finally approach the castle. It has a face on it for some reason. Nether the less, you walk inside.*",
+            "status": [
+                "Most of the ground is floating above lava.",
+                "You dodge past rotating columns of fire.",
+                "Undead skeletal remains of turtles are attacking you with their bones.",
+                "You climb a seemingly endless set of spiral stairs",
+                "You move past tons of spooky traps.",
+                "It's really hot in here with all the lava and all...",
+                "A sense of dread looms on your back"
+            ]
+		},
+		{
+			"name":"The Battle",
+			"thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983493026914354/22.png",
+			"lore":"*You make it to the top and see... him. He sees you and immediately pulls out a sword of his own! The duel has begun!*",
+            "status": [
+                "Your swords clash.",
+                "You roll constantly around him, but end up just getting hit more.",
+                "You block an attack and he stumbles.",
+                "You strike, but it does minimal damage.",
+                "He has some tricks up his sleeve. You take 20 points of damage.",
+                "You try to interegate him mid-fight but he shows no interest in talking.",
+                "Your glasses get slightly cracked, limiting your vision a bit."
+            ]
+		},
+		{
+			"name":"The Retreat",
+			"thumbnail":"https://media.discordapp.net/attachments/875265776305721395/896983504385097728/23.png",
+			"lore":"*Your sword breaks, so you retreat back outside. You take a few more hours to train.*",
+            "status": [
+                "You are wounded.",
+                "You grind even more.",
+                "You try to fix your broken glasses.",
+                "You use some time travel exploits to get super buff.",
+                "You punch a tree and your knuckles start bleeding.",
+                "Luckily you remember an easy route to the top of his castle where he resides.",
+                "TRAINING MONTAGE DODODODO TRAINING MONTAGE DODODO..."
+            ]
+		},
+		{
+			"name":"The Return",
+			"thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983510445858836/24.png",
+			"lore":"*You, now fully trained, return to his castle to find it's like 50x larger.*",
+            "status": [
+                "You spend 50 hours grinding through one room.",
+                "There's a pressure plate on the ground",
+                "There's like 30 bathrooms in this place.",
+                "A lot of the doors are nailed shut.",
+                "You casually avoid a dangerous multidimentional vortex",
+                "The lava is really annoying.",
+                "There's a store randomly here. You buy some potions."
+            ]
+		},
+		{
+			"name":"The Climb",
+			"thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983516695367700/25.png",
+			"lore":"*You finally reach the central stair case. It's a massive spiral staircase that goes miles up.*",
+            "status": [
+                "You walk up the stairs...",
+                "You walk up the stairs...",
+                "You walk up the stairs...",
+                "You walk up the stairs...",
+                "You walk up the stairs...",
+                "You walk up the stairs...",
+                "You accidently trip and fall several steps down."
+            ]
+		},
+		{
+			"name":"The Miniboss",
+			"thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/896983521812434954/26.png",
+			"lore":"*You finally reach the top, but you are met with a giant spider!*",
+            "status": [
+                "The spider shoots webs everywhere.",
+                "You dodge the web shots",
+                "You slice one of its legs off.",
+                "It evades your strikes by crawling around the ceiling",
+                "It tries to bite you.",
+                "You try to not sympathize with it.",
+                "You question its one tooth."
+            ]
+		},
+		{
+			"name":"The Finale",
+			"thumbnail":"https://media.discordapp.net/attachments/1002331238893355079/1046176639589036032/27.png",
+			"lore":"*You FINALLY reach him... DR. EVIL (pronounced eh-val). You waste no time and begin attacking.*",
+            "status": [
+                "You dodge to the right, you parry to the left.",
+                "You attack in rhythmic perfection.",
+                "He laughs maniaclly.",
+                "He looks very scary",
+                "idk you try killing him or something",
+                "epic battle music",
+                "lmao he has no hair lets laugh at him."
+            ]
+		},
+		{
+			"name":"The Witty Banter",
+			"thumbnail":"https://media.discordapp.net/attachments/1002331238893355079/1046176639899410472/28.png",
+			"lore":"*It's now that point in the fight where you make witty banter...*",
+            "status": [
+                "\"You stole everything from me!\"",
+                "\"You don't deserve your title of doctor!\"",
+                "\"bruh you ruined my glasses, I just got these back.\"",
+                "\"lmao you still got no hair\"",
+                "\"Why were you studying in arachnology if you were just going to cheat anyways? Wouldn't it make more sense to study architecture seeing as to how you managed to drastically increase the size of this castle within like three days?\"",
+                "\"Come on man, let me kill you!\""
+            ]
+		},
+		{
+			"name":"The Final Phase",
+			"thumbnail":"https://media.discordapp.net/attachments/1002331238893355079/1046176640297861213/29.png",
+			"lore":"*Dr. Evil evolves into a giant ferocious beast because of your rude comments. Dr. Evil is now in his final form. You must do everything in your power to grind his health away.*",
+            "status": [
+                "You have never seen something so scary",
+                "You scale the beast, but it fights back.",
+                "This dude is mad ugly now.",
+                "You use your spider senses to summon an army of spiders.",
+                "he still has no hair",
+                "He's destroying everything around him.",
+				"even epicer battle music"
+            ]
+		},
+		{
+			"name":"Party Time!",
+			"thumbnail":"https://media.discordapp.net/attachments/1002331238893355079/1046176640671162438/30.png",
+			"lore":"*You've done it! Dr. Evil has been defeated and the world is saved. Now there's no need to wait: it's party time! Thank you for playing The Mr. Megee Idle Game!*",
+            "status": [
+                "You do a funky dance",
+                "You dance with some spider friends :)",
+                "You show off your sweet moves.",
+                "You floss over Dr. Evil's corpse",
+                "Ok to be fair, you don't have hair either so...",
+                "Alls well that ends well",
+				"This was weird..."
+            ]
+		},
+		{
+			"name":"ok you can stop playing now",
+			"thumbnail":"https://media.discordapp.net/attachments/1002331238893355079/1046176641212231760/31.png",
+			"lore":"*Uhhh so like the game's over. There's no more content...*",
+            "status": [
+                "Maybe if you beg hard enough, I'll make a NG++"
+			]
+		}
+    ],
+    "shop": {
+        "title": "Shop",
+        "thumbnail": "https://cdn.discordapp.com/attachments/875265776305721395/875913431373455370/shop_spider.png",
+        "body": "Use your Coins <:Coin:514985713574346758> to buy helpful upgrades to increase XP production!\nDo `xd)idle shop <number>` to purchase an item.",
+		"items": [
+			{
+				"name": "Food",
+				"value": 1,
+				"cost": 1
+			},
+			{
+				"name": "Water",
+				"value": 1,
+				"cost": 1
+			},
+			{
+				"name": "Shelter",
+				"value": 5,
+				"cost": 10
+			},
+			{
+				"name": "Weaponry",
+				"value": 5,
+				"cost": 15
+			},
+			{
+				"name": "Stamina",
+				"value": 10,
+				"cost": 50
+			},
+			{
+				"name": "Intel",
+				"value": 10,
+				"cost": 55
+			},
+			{
+				"name": "Scrap",
+				"value": 50,
+				"cost": 90
+			},
+			{
+				"name": "Electronics",
+				"value": 55,
+				"cost": 100
+			},
+			{
+				"name": "Potions",
+				"value": 100,
+				"cost": 400
+			},
+			{
+				"name": "Tools",
+				"value": 150,
+				"cost": 500
+			}
+		]
+    },
+    "perk": {
+        "title": "Perks",
+        "thumbnail": "https://cdn.discordapp.com/attachments/875265776305721395/875913427778949180/perk_spider.png",
+        "body": "Spend Perk Points gained from leveling up on Perks!\n`xd)idle perk buy` to get this perk\n`xd)idle perk reroll` to try for a different perk."
+    },
+    "reroll": {
+        "title": "Perks",
+        "thumbnail": "https://cdn.discordapp.com/attachments/1002331238893355079/1002393881108819968/reroll_spider.png",
+        "body": "You rerolled and now have this perk!"
+    },
+    "perklist": [
+        {
+            "name": "Double XP",
+            "description": "Every message gives double XP!",
+			"spiderweb": "Every message gives quadrupled XP",
+			"status": "Some ants told you superior production strategies.",
+            "image": "https://media.discordapp.net/attachments/875265776305721395/875595628774826044/double_xp.png",
+            "emote": "<:double_xp:875595501796479018>"
+        },
+        {
+            "name": "Worthless Coins",
+            "description": "-10 XP cost for converting coins!",
+			"spiderweb": "-15 XP cost for converting coins",
+			"status": "The coins are worth 32000% less than the American Dollar.",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599950828949554/worthless_coins.png",
+            "emote": "<:worthless_coins:875602340311347200>"
+        },
+        {
+            "name": "Payment",
+            "description": "Instantly gain a large amount of coins!",
+			"spiderweb": "Perk Points award 2x more coins.",
+			"status": "An investing Cicada likes your work and gives you a hefty donation.",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599944810110976/payment.png",
+            "emote": "<:payment:875602340361691186>"
+        },
+        {
+            "name": "Coin Forgery",
+            "description": "-10 XP cost for converting coins!",
+			"spiderweb": "-15 XP cost for converting coins!",
+			"status": "These coins are made with extremely cheap and simple materials...",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599933351268392/coin_forgery.png",
+            "emote": "<:coin_forgery:875602340495908864>"
+        },
+        {
+            "name": "Coin Drops",
+            "description": "Random chance to gain a coin on a message!",
+			"spiderweb": "Random chance to gain 1-3 coins on a message!",
+			"status": "You find a coin on the ground.",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599930331398154/coin_drops.png",
+            "emote": "<:coin_drops:875602340005171201>"
+        },
+        {
+            "name": "XP Boost",
+            "description": "Random chance to gain 7.5x more XP on a message!",
+			"spiderweb": "Random chance to gain 14x more XP on a message!",
+			"status": "\"Eureka!\"",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599954234732554/xp_boost.png",
+            "emote": "<:xp_boost:875602340340719666>"
+        },
+        {
+            "name": "Web Mastery",
+            "description": "Messages with links give you 50% more XP",
+			"spiderweb": "Messages with links give you 100% more XP",
+			"status": "You have mastered the art of spinning webs.",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599947863568394/web_mastery.png",
+            "emote": "<:web_mastery:875602340378460210>"
+        },
+        {
+            "name": "Friends of the Wild",
+            "description": "Messages with pings give you 50% more XP",
+			"spiderweb": "Messages with pings give you 100% more XP",
+			"status": "You meet some friends :)",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599938808053840/friends_of_the_wild.png",
+            "emote": "<:friends_of_the_wild:875602340298776576>"
+        },
+        {
+            "name": "Gambling",
+            "description": "Each message now grants additional XP from -5 to 10 multipled by your level.",
+			"spiderweb": "Each message now grants additional XP from -5 to 20 multipled by your level.",
+			"status": "You now have a gambling addiction!",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599941538545674/gambling.png",
+            "emote": "<:gambling:875602340000956477>"
+        },
+        {
+            "name": "Freebie",
+            "description": "Random chance to gain a free coin when converting. (for every coin gained)",
+			"spiderweb": "High chance to gain a free coin when converting. (for every coin gained)",
+			"status": "The bank of Mr. Megee grants you rewards for using their services!",
+            "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599936106922024/freebie.png",
+            "emote": "<:freebie:875602340361682995>"
+        },
+		{
+			"name": "Discount",
+			"description": "Reduces the price of shop items by 35%",
+			"spiderweb": "Reduces the price of shop items by 75%",
+			"status": "You found a coupon!",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333706977018006/discount.png",
+			"emote": "<:discount:1002333608360554591>"
+		},
+		{
+			"name": "Black Market",
+			"description": "Adds a new shop item",
+			"spiderweb": "Adds another new shop item",
+			"status": "You discover the forest's black market. It's sketchy, but they got the good stuff.",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333706645684334/black_market.png",
+			"emote": "<:black_market:1002333607634935858>"
+		},
+		{
+			"name": "The Spider's Web",
+			"description": "Boosts the strength of each perk",
+			"spiderweb": "[ The boosted effect description can be found next to this star here ]",
+			"status": "The power of the web is unmatched.",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333733149479043/spiderweb.png",
+			"emote": "<:spiderweb:1002333619836158023>"
+		},
+		{
+			"name": "Master Forager",
+			"description": "5% more XP for every Food you have",
+			"spiderweb": "15% more XP for every Food you have",
+			"status": "You have mastered the skill of foraging!",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333705953607750/master_forager.png",
+			"emote": "<:master_forager:1002333616669462688>"
+		},
+		{
+			"name": "Master Drinker",
+			"description": "5% more XP for every Water you have",
+			"spiderweb": "15% more XP for every Water you have",
+			"status": "You have mastered the skill of drinking...",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333708847689778/master_drinker.png",
+			"emote": "<:master_drinker:1002333614433894422>"
+		},
+		{
+			"name": "Master Designer",
+			"description": "5% more XP for every Shelter you have",
+			"spiderweb": "15% more XP for every Shelter you have",
+			"status": "You have mastered the skill of construction!",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333708294041702/master_designer.png",
+			"emote": "<:master_designer:1002333613213360299>"
+		},
+		{
+			"name": "Master Fighter",
+			"description": "5% more XP for every Weaponry you have",
+			"spiderweb": "15% more XP for every Weaponry you have",
+			"status": "You have mastered the art of combat!",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333705605484604/master_fighter.png",
+			"emote": "<:master_fighter:1002333615675424969>"
+		},
+		{
+			"name": "Master Slinger",
+			"description": "5% more XP for every Stamina you have",
+			"spiderweb": "15% more XP for every Stamina you have",
+			"status": "You have mastered the skill of web slinging!",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333706314330183/master_slinger.png",
+			"emote": "<:master_slinger:1002333617625767947>"
+		},
+		{
+			"name": "Master Thinker",
+			"description": "5% more XP for every Intel you have",
+			"spiderweb": "15% more XP for every Intel you have",
+			"status": "You have mastered the mind!",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333733740883978/master_thinker.png",
+			"emote": "<:master_thinker:1002333618464620666>"
+		},
+		{
+			"name": "A Gift From Above",
+			"description": "Small chance to gain 1 food or 1 water per message.",
+			"spiderweb": "Small chance to gain 1 food and 1 water per message.",
+			"status": "A human accidently drops a snack near you.",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333707711037540/gift_from_above.png",
+			"emote": "<:gift_from_above:1002333610851971123>"
+		},
+		{
+			"name": "Herald's Gesture",
+			"description": "Gain 5% more XP for every prestige you have",
+			"spiderweb": "Gain 10% more XP for every prestige you have",
+			"status": "Herald grants you his blessing.",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333707996254268/herald.png",
+			"emote": "<:herald:1002333611938304010>"
+		},
+		{
+			"name": "Equality",
+			"description": "If you have an equal amount of each shop item, you earn 4x the XP",
+			"spiderweb": "If you have an equal amount of each shop item, you earn 6x the XP",
+			"status": "Balance is the key to a faster production.",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1002333707295797308/equality.png",
+			"emote": "<:equality:1002333609786617986>"
+		}
+    ],
+	"tree": {
+		"title": "Prestige Tree",
+		"thumbnail": "https://media.discordapp.net/attachments/1002331238893355079/1020112041891070002/tree_spider.png",
+		"body": "Spend Prestige Tokens on the Prestige Tree to earn pesistant upgrades for your idle game.\n\nUse `xd)idle tree [id]` to view a description of that upgrade."
+	},
+	"upgradelist": [
+		{
+			"name": "Rations",
+			"id": 0,
+			"description": "Start a prestige with 5 food",
+			"prereq": null
+		},
+		{
+			"name": "Perkaholic",
+			"id": 1,
+			"description": "Keep one random perk when you prestige",
+			"prereq": 0
+		},
+		{
+			"name": "Shop Upgrade",
+			"id": 2,
+			"description": "Adds two new shop items.",
+			"prereq": 0
+		},
+		{
+			"name": "Bank",
+			"id": 3,
+			"description": "Adds the bank which allows you to store coins between prestiges.",
+			"prereq": 0
+		},
+		{
+			"name": "Journal",
+			"id": 4,
+			"description": "The journal allows you to view previous prestige icons, message text, and splash text",
+			"prereq": 0
+		},
+		{
+			"name": "Meditate",
+			"id": 5,
+			"description": "Meditate allows you to earn XP automatically over a period of time.",
+			"prereq": 1
+		},
+		{
+			"name": "Bank II",
+			"id": 6,
+			"description": "Increases bank capacity from 200 to 800",
+			"prereq": 3
+		},
+		{
+			"name": "Bank III",
+			"id": 7,
+			"description": "Increases bank capacity from 800 to 2000",
+			"prereq": 6
+		},
+		{
+			"name": "Investment",
+			"id": 8,
+			"description": "Lets you delete all your stored coins for a chance to get them back for a profit on the next prestige.",
+			"prereq": 3
+		},
+		{
+			"name": "xd",
+			"id": 9,
+			"description": "xd",
+			"prereq": null
+		},
+		{
+			"name": "xd",
+			"id": 10,
+			"description": "xd",
+			"prereq": null
+		},
+		{
+			"name": "xd",
+			"id": 11,
+			"description": "xd",
+			"prereq": null
+		},
+		{
+			"name": "Casino",
+			"id": 12,
+			"description": "Access the Mr. Megee Casino!",
+			"prereq": 2
+		},
+		{
+			"name": "Card Counter",
+			"id": 13,
+			"description": "Higher chance at winning games in the Casino",
+			"prereq": 12
+		},
+		{
+			"name": "Water Bottle",
+			"id": 14,
+			"description": "Start a prestige with 10 water",
+			"prereq": 1
+		},
+		{
+			"name": "Strongest Mind",
+			"id": 15,
+			"description": "Earn more XP while meditating and decrease the penality of breaking it.",
+			"prereq": 5
+		},
+		{
+			"name": "The All Seeing Spider",
+			"id": 16,
+			"description": "Decrease the penalty of breaking meditation even further and earn extra if stopping correctly.",
+			"prereq": 15
+		}
+	],
+	"bank": {
+		"title": "Bank",
+		"thumbnail": "https://media.discordapp.net/attachments/1002331238893355079/1020864531653742652/bank_spider.png",
+		"body": "Store a certain amount of coins between prestiges.\n\nUse `xd)bank <deposit/withdraw> <amount>` to deposit or withdraw the specifified amount of money.",
+		"invest": "\n\nDo `xd)idle bank invest` to delete all the coins stored in the bank for a chance to get between 0.75x to 2x the amount back when you prestige. This will also prevent you from using the bank for the rest of this prestige."
+	},
+	"stock": {
+		"title": "Stocks",
+		"thumbnail": "",
+		"body": "The Mr. Megee Stock Market allows you to purchase stocks and sell them. The price will update every day.\n\nUse `xd)stock <buy/sell>` to purchase or sell stocks."
+	},
+	"meditate": {
+		"title": "Meditate",
+		"thumbnail": "https://cdn.discordapp.com/attachments/1002331238893355079/1003074238502141962/meditate_spider.png",
+		"body": "Meditation allows you to earn XP automatically without the need to type messages. Once you start meditating, you will begin earning your xppm automatically every 30 minutes. If you break your meditation by sending a message, you will lose what you have earned. If you stop meditating correctly, you will earn the accumulation you have gained.\n\n`xd)idle meditate start` enable meditation\n`xd)idle meditate stop` stop meditation and earn your reward",
+		"mind": "Meditation allows you to earn XP automatically without the need to type messages. Once you start meditating, you will begin earning your xppm automatically every 15 minutes. If you break your meditation by sending a message, you will lose 75% of what you have earned. If you stop meditating correctly, you will earn the accumulation you have gained.\n\n`xd)idle meditate start` enable meditation\n`xd)idle meditate stop` stop meditation and earn your reward",
+		"allseeing": "Meditation allows you to earn XP automatically without the need to type messages. Once you start meditating, you will begin earning your xppm automatically every 15 minutes. If you break your meditation by sending a message, you will lose 45% of what you have earned. If you stop meditating correctly, you will earn the accumulation you have gained.\n\n`xd)idle meditate start` enable meditation\n`xd)idle meditate stop` stop meditation and earn your reward"
+	},
+	"pawn": {
+		"title": "Pawn",
+		"thumbnail": "",
+		"body": "The Pawn Shop allows you to sell items you randomly find to earn some coins.\n\nUse `xd)idle pawn sell` to sell all your items.",
+		"secrets": [
+			"spider",
+			"Television",
+			"TV",
+			"shield",
+			"hook",
+			"grapple",
+			"wish",
+			"family pc",
+			"family computer",
+			"pin this",
+			"megee",
+			"mcgee",
+			"grim reaper",
+			"Billy & Mandy",
+			"4k",
+			"im dead",
+			"i'm dead",
+			"secret",
+			"gold",
+			"drg",
+			"pickaxe",
+			"pickle",
+			"rick",
+			"Colind8"
+		],
+		"secrets_ext": [
+			{
+				"secret": ["spider"],
+				"name": "Mr. Megee Bust",
+				"desc": "A statue of Mr. Megee's head.",
+				"emoji": "<:Megee:514985713301979165>",
+				"reward": 50
+			},
+			{
+				"secret": ["Television","TV"],
+				"name": "Television",
+				"desc": "Definitely not stolen or anything.",
+				"emoji": "📺",
+				"reward": 25
+			},
+			{
+				"secret": ["shield"],
+				"name": "Trashcan Lid",
+				"desc": "it's protection against the racoons.",
+				"emoji": "🛡",
+				"reward": 10
+			},
+			{
+				"secret": ["hook", "grapple"],
+				"name": "Grappling Hook",
+				"desc": "The one thing a spider doesn't need.",
+				"emoji": "⚓",
+				"reward": 10
+			},
+			{
+				"secret": ["wish"],
+				"name": "A Lamp",
+				"desc": "It's an old table lamp.",
+				"emoji": "🧞",
+				"reward": 10
+			},
+			{
+				"secret": ["family pc", "family computer"],
+				"name": "The Family PC",
+				"desc": "It was cheap, even back when it was new. Runs windows vista, wasnt reset. Only god knows what secrets lay within the computer.",
+				"emoji": "🖥",
+				"reward": 20
+			},
+			{
+				"secret": ["pin this"],
+				"name": "A Thumbtack",
+				"desc": "In relative size, this is considered a weapon.",
+				"emoji": "📌",
+				"reward": 25
+			},
+			{
+				"secret": ["megee"],
+				"name": "A Megee Coin",
+				"desc": "A Megee Coin is worth one Megee Coin.",
+				"emoji": "<:Coin:514985713574346758>",
+				"reward": 1
+			},
+			{
+				"secret": ["mcgee", "grim reaper", "Billy & Mandy"],
+				"name": "The Brain of Mr. Mcgee",
+				"desc": "Unrelated. He wasn't using this.",
+				"emoji": "🧠",
+				"reward": 25
+			},
+			{
+				"secret": ["4k"],
+				"name": "A Camera",
+				"desc": "It supports 4K photos.",
+				"emoji": "📸",
+				"reward": 20
+			},
+			{
+				"secret": ["im dead", "i'm dead"],
+				"name": "A Human Skull",
+				"desc": "I think he's dead.",
+				"emoji": "💀",
+				"reward": 20
+			},
+			{
+				"secret": ["secret"],
+				"name": "A Treasure Map",
+				"desc": "The treasure is apparently located in Oregon.",
+				"emoji": "🗺",
+				"reward": 10
+			},
+			{
+				"secret": ["gold", "DRG", "rock and stone"],
+				"name": "A Pickaxe",
+				"desc": "It smells of alcohol.",
+				"emoji": "⛏",
+				"reward": 10
+			},
+			{
+				"secret": ["pickle", "rick"],
+				"name": "A Pickle",
+				"desc": "Something about this is humorous.",
+				"emoji": "🥒",
+				"reward": 10
+			},
+			{
+				"secret": ["Colind8"],
+				"name": "Groucho glasses",
+				"desc": "Neat, a disguise!",
+				"emoji": "🥸",
+				"reward": 25
+			}
+		]
+	},
+	"casino": {
+		"title": "Casino",
+		"thumbnail": "https://cdn.discordapp.com/attachments/1002331238893355079/1003073926643077170/casino_spider.png",
+		"body": "The Mr. Megee Casino allows you to do the inevitable with a Discord Economy, GAMBLE!!! Now featuring realisitic odds based on real casinos!\n\n`xd)idle casino slots` to spend one coin on slots."
+	},
+	"journal": {
+		"title": "Journal",
+		"thumbnail": "https://cdn.discordapp.com/attachments/1002331238893355079/1003073348768636998/journal_spider.png",
+		"body": "Use the journal to view previous prestige icons, message text, and splash text.\n\nUse `xd)idle journal [prestige]` to see the journal's secrets. Note: You can only view a prestige you've already completed."
+	},
+	"settings": {
+		"title": "Settings",
+		"thumbnail": "https://cdn.discordapp.com/attachments/1002331238893355079/1003071373364703302/settings_spider.png",
+		"body": "Configure your experience by toggling the options below!\n\n`xd)idle settings <setting> <enable/disable>`",
+		"setting": [
+			{
+				"name": "important_notifications",
+				"desc": "Shows you when you level up, break meditation, or reach prestige."
+			},
+			{
+				"name": "perk_notifications",
+				"desc": "Shows you when Coins Drops, XP Boost, or A Gift From Above activate."
+			},
+			{
+				"name": "pawn_notifications",
+				"desc": "Shows you when and what item you found on a message."
+			},
+			{
+				"name": "minimode",
+				"desc": "Hides images and instructions to make the embeds smaller."
+			},
+			{
+				"name": "auto_prestige",
+				"desc": "Automatically prestige when you reach max level."
+			},
+			{
+				"name": "pause",
+				"desc": "Stops you from earning XP and activating perks. Meditation can break but will not give you any reward."
+			}
+		]
+	}
+}

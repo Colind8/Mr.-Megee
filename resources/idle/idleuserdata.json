@@ -1,0 +1,59 @@
+{
+    "xp": 0,
+    "xppm": 1,
+    "level": 0,
+    "coins": 0,
+    "prestige": 1,
+    "perkpoints": 0,
+    "randperk": "Double XP",
+    "upgrades": {
+        "food": 0,
+        "water": 0,
+        "shelter": 0,
+        "weaponry": 0,
+        "stamina": 0,
+        "intel": 0
+    },
+    "perks": [
+        {
+            "name": "Double XP",
+            "owned": false
+        },
+        {
+            "name": "Worthless Coins",
+            "owned": false
+        },
+        {
+            "name": "Payment",
+            "owned": false
+        },
+        {
+            "name": "Coin Forgery",
+            "owned": false
+        },
+        {
+            "name": "Coins Drops",
+            "owned": false
+        },
+        {
+            "name": "XP Boost",
+            "owned": false
+        },
+        {
+            "name": "Web Mastery",
+            "owned": false
+        },
+        {
+            "name": "Friends of the Wild",
+            "owned": false
+        },
+        {
+            "name": "Gambling",
+            "owned": false
+        },
+        {
+            "name": "Freebie",
+            "owned": false
+        }
+    ]
+}

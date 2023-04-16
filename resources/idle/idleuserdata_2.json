@@ -1,0 +1,45 @@
+{
+	"ver": 2,
+	"xp": 0,
+	"xppm": 1,
+	"level": 0,
+	"coins": 0,
+	"prestige": 1,
+	"tokens": 0,
+	"perkpoints": 0,
+	"randperk": 0,
+	"items": {
+		"food": 0,
+		"water": 0,
+		"shelter": 0,
+		"weaponry": 0,
+		"stamina": 0,
+		"intel": 0,
+		"scrap": 0,
+		"electronics": 0,
+		"potions": 0,
+		"tools": 0
+	},
+	"perks": [
+
+	],
+	"tree": [
+
+	],
+	"minigames": {
+		"bank": 0,
+		"investment": 0,
+		"meditate": {
+			"active": false,
+			"date": 0
+		}
+	},
+	"settings": {
+		"perknotifications": true,
+		"pawnnotifications": true,
+		"importantnotifications": true,
+		"minimode": false,
+		"autoprestige": false,
+		"paused": false
+	}
+}
