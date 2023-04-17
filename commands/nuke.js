@@ -4,7 +4,7 @@ const prefix = config.prefix;
 module.exports = {
 	name: 'nuke',
 	description: 'Nuke somebody!',
-    usage: '`xd)nuke [@someone] [# of pings`',
+    usage: '`xd)nuke [@someone] [# of pings]`',
     category: 'meme',
 	async execute(message) {
         const args = message.content.slice(prefix.length).trim().split(/ +/);
