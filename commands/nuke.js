@@ -18,6 +18,9 @@ module.exports = {
             if(args[1] > 20) { // if [# of pings] greater than 20, set to 20
                 pn = 20
             }
+            if(args[1] < 2) {
+                pn = 2
+            }
         }
         
         if (args[0]) {
@@ -26,13 +29,13 @@ module.exports = {
                 return message.reply('Who?')
             }
 
-            for (i = 0; i < pn; i++) {
+            for (i = 0; i =< pn-1; i++) {
                 message.channel.send(`${user} is being nuked!`);
             }
             return message.channel.send(`${user} has been nuked!`);
         }
 
-        for (i = 0; i < pn; i++) {
+        for (i = 0; i =< pn-1; i++) {
                 message.channel.send(`${message.author} is being nuked!`);
             }
         return message.channel.send(`${message.author} has been nuked!`);
