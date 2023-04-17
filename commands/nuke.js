@@ -15,6 +15,9 @@ module.exports = {
             if(isNaN(args[1])) { // is [# of pings] argument NaN, which also deals with empty string
                 pn = 20
             }
+            if(args[1] > 20) { // if [# of pings] greater than 20, set to 20
+                pn = 20
+            }
         }
         
         if (args[0]) {
