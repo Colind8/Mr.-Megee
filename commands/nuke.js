@@ -7,7 +7,7 @@ module.exports = {
     usage: '`xd)nuke [@someone] [# of pings]`',
     category: 'meme',
 	async execute(message) {
-        const args = message.content.slice(prefix.length).trim().split(/ +/);
+        const args = message.content.slice(prefix.length).trim().split(" ");
 	    const command = args.shift().toLowerCase();
         
 
