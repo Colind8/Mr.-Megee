@@ -9,17 +9,18 @@ module.exports = {
 	async execute(message) {
         const args = message.content.slice(prefix.length).trim().split(" ");
 	    const command = args.shift().toLowerCase();
-        var pn = args[1] // pn = "ping number" or "number of pings"
+        var pn = 20;
         
         if (args[1]) { 
+			pn = args[1] // pn = "ping number" or "number of pings"
             if(isNaN(args[1])) { // is [# of pings] argument NaN, which also deals with empty string
-                pn = 20
+                pn = 20;
             }
             if(args[1] > 20) { // if [# of pings] greater than 20, set to 20
-                pn = 20
+                pn = 20;
             }
             if(args[1] < 2) {
-                pn = 2
+                pn = 2;
             }
         }
         
