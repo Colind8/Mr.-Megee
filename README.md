@@ -2,6 +2,7 @@
 Mr. Megee is a Discord.js bot that has a primary focus on unique features, trolling, and possibly being sentient.
 
 [Bot Invite](https://discord.com/oauth2/authorize?client_id=472812336214966283&permissions=313408&scope=bot)
+
 [Discord Server](https://discord.gg/c7hq5PMhqV)
 
 ## Features
