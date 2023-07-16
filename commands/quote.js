@@ -26,8 +26,11 @@ module.exports = {
             
             return message.channel.send({embeds: [embed]});
         } else {
-			if(arg.includes(`"`) || arg.includes(`*`) || arg.includes(`@`)) {
+			if(arg.includes(`*`) || arg.includes(`@`)) {
                 return message.channel.send("Your quote cannot contain `\"`, `*`, or `@`");
+            }
+            if(arg.includes(`"`)) {
+                return message.channel.send("Your quote cannot contain `\"`, `*`, or `@`. If you are trying to quote within your quote, use single quotations 'like this'");
             }
 			if(arg.length > 1500) {
                 return message.channel.send("Your quote is too long!");
