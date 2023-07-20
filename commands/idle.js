@@ -192,8 +192,8 @@ module.exports = {
 				let sarr = shopnumbers(key);
 				let shopallow = false;
 				
-				for (i = 0; i < sarr.length; i++) {
-					if (Number(args[1]) - 1 == sarr[i]) {
+				for (i = 0; (i < sarr.length || shopallow == true); i++) {
+					if (Number(args[1]) - 1 == i) {
 						shopallow = true;
 					}
 				}
