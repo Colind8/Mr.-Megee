@@ -330,7 +330,23 @@ module.exports = {
 				
 				return message.channel.send("You now have the **" + idle.perklist[key.perks[key.perks.length - 1]].name + "** perk!");
 			}
-		
+			
+			/*==========================
+				xd)idle perks
+			============================*/
+			if (args[0] == "perks") {
+				if (key.perks.length == 0) {
+					return message.channel.send("You do not own any perks.");
+				}
+				perklist = `Your perks:`;
+				for (i = 0; i < key.perks.length; i++) {
+					perklist += `\n> ${idle.perklist[key.perks[i]].emote} ${idle.perklist[key.perks[i]].name}`;
+				}
+				return message.channel.send(perklist);
+				
+			}
+			
+			
 			/*==========================
 				xd)idle prestige
 			============================*/
