@@ -23,7 +23,7 @@ Mr. Megee is a Discord.js bot that has a primary focus on unique features, troll
   - p.
     - Play a funny sound from the extensive p soundboard (45+ sounds to choose from!)
   - actually / aktchually 
-    - Instantly when any arguement using the likeness of Adam Conover or 🤓
+    - Instantly win any argument using the likeness of Adam Conover or a nerd emoji.
   - rps
     - Play rock paper scissors against Mr. Megee. Be careful though, he's a master!
 - r/
