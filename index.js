@@ -1,54 +1,34 @@
-const fs = require('fs');
-//import fs from 'fs';
-const { Client, Intents, Collection } = require('discord.js');
 const config = require('./config.json');
-const idle = require('./idle_2.json');
-const unrecognizedCommands = require('./random/unrecognized.json');
-const phrases = require('./random/phrases.json');
-//const Database = require("@replit/database")
-//const db = new Database()
+const { Client, Intents, Collection } = require('discord.js');
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
+
+client.login(config.token); //either "token" or "devtoken"
+const prefix = config.prefix; //either "prefix" or "devprefix"
+
+const fs = require('fs');
+const idle = require('./resources/idle/idle_2.json');
+const unrecognizedCommands = require('./resources/random/unrecognized.json');
+const phrases = require('./resources/random/phrases.json');
 const sqlite = require('sqlite3').verbose();
 const db = new sqlite.Database('./megee.db', sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE);
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
+
 client.commands = new Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command_data = require(`./commands/${file}`);
-	// set a new item in the Collection
-	// with the key as the command name and the value as the exported module
 	client.commands.set(command_data.name, command_data);
 }
 
 
 client.once('ready', () => {
-    //db.empty(); //DELETE PROFILES ON START
-    //db.list().then(console.log);
-	//db.run(`CREATE TABLE IF NOT EXISTS idle(userid INTEGER NOT NULL, data TEXT NOT NULL)`);
-	
-	/*db.get(`SELECT * FROM idle WHERE userid = 791305576251392030`, (error, results) => {
-		if (error) {
-			throw error;
-		}
-		//idledata = ;
-		
-		eval('var idledata='+results.data);
-		console.log(idledata);
-		console.log(JSON.stringify(idledata));
-		db.run(`UPDATE idle SET data = ? WHERE userid = ?`,[JSON.stringify(idledata),791305576251392030]);
-		console.log("done");
-		//console.log(idledata.xp);
-	})*/
-	
-	
     console.log('\n+---==| Mr. Megee |==---');
 	console.log('| Ready!');
     console.log('| Serving on ' + client.guilds.cache.size + ' servers');
     let count = client.guilds.cache.size
-    fs.writeFileSync("data.json", `{"servers": `+ count + `}`);
+    fs.writeFileSync("./resources/data.json", `{"servers": `+ count + `}`);
     console.log('+-----------------------\n');
-
 });
 
 client.on('messageCreate', async message => {
@@ -482,7 +462,3 @@ function idling (key, message) { // Idle Update
 	
 	return reactions;	
 }
-
-//const mySecret = process.env['TOKEN']
-client.login(config.token); //either "token" or "devtoken"
-const prefix = config.prefix; //either "prefix" or "devprefix"
