@@ -669,16 +669,8 @@ module.exports = {
 					}
 					
 					key.minigames.meditate.active = false;
-					currenttime = new Date();
-					if (key.tree.includes(15)) {
-						meditatexp = Math.floor((currenttime.getTime() - key.minigames.meditate.date) / 900000) * key.xppm;
-					} else {
-						meditatexp = Math.floor((currenttime.getTime() - key.minigames.meditate.date) / 1800000) * key.xppm;
-					}
 					
-					if (key.tree.includes(16)) {
-						meditatexp = Math.ceil(meditatexp * 1.05);
-					}
+					meditatexp = calculate_meditatexp(key);
 					
 					key.xp = key.xp + meditatexp;
 					
@@ -1128,6 +1120,21 @@ function do_slots(slot_winners) {
 	return slots_reward;
 }
 
+function calculate_meditatexp(key) {
+	currenttime = new Date();
+	if (key.tree.includes(15)) {
+		c_meditatexp = Math.floor((currenttime.getTime() - key.minigames.meditate.date) / 900000) * key.xppm;
+	} else {
+		c_meditatexp = Math.floor((currenttime.getTime() - key.minigames.meditate.date) / 1800000) * key.xppm;
+	}
+	
+	if (key.tree.includes(16)) {
+		c_meditatexp = Math.ceil(c_meditatexp * 1.05);
+	}
+	
+	return c_meditatexp;
+}
+
 /*=====================
 	EMBEDS
 =====================*/
@@ -1547,13 +1554,14 @@ function meditatebuilder (key) {
 	if (key.minigames.meditate.active) {
 		currenttime = new Date();
 		medidate = Math.round((currenttime.getTime() - key.minigames.meditate.date) / 60000);
+		b_meditatexp = calculate_meditatexp(key);
 		
 		const idleMeditate = new MessageEmbed()
 			.setColor(color)
 			.setTitle(idle.meditate.title)
 			.setThumbnail(idle.meditate.thumbnail)
 			.setDescription(meditatedesc)
-			.addField("You are currently meditating", `You have been meditating for ${medidate} minutes.`)
+			.addField("You are currently meditating", `You have been meditating for ${medidate} minutes.\nIf you stop meditating now, you can earn ${b_meditatexp} XP.`)
 		return idleMeditate;
 	} else {
 		const idleMeditate = new MessageEmbed()
