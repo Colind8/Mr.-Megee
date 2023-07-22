@@ -23,7 +23,6 @@ module.exports = {
 		// inside a command, event listener, etc.
 		const exampleEmbed = new MessageEmbed()
 			.setTitle(user.username)
-			.setAuthor({ name: user.tag})
 			.setDescription(`Created <t:${Math.floor(user.createdAt.getTime() / 1000)}:R>`)
 			.setThumbnail(user.displayAvatarURL({ format: 'png', size: 1024}))
 			/*.addFields(
