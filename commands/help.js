@@ -80,7 +80,7 @@ module.exports = {
 	            .setDescription(description)
 	            .setThumbnail("https://cdn.discordapp.com/attachments/510953636084449316/552848757557821475/Megee.png")
                 .setImage("https://cdn.discordapp.com/attachments/467429580953747466/480619950424457227/xd.gif")
-                .setFooter("Mr. Megee")
+                .setFooter({text: "Mr. Megee"})
 
             return message.channel.send({ embeds: [help] });
         } else if (args[0] == "utility") {
@@ -99,7 +99,7 @@ module.exports = {
 	            .setDescription(description)
 	            .setThumbnail("https://cdn.discordapp.com/attachments/510953636084449316/552848757557821475/Megee.png")
                 .setImage("https://cdn.discordapp.com/attachments/467429580953747466/480619950424457227/xd.gif")
-                .setFooter("Mr. Megee")
+                .setFooter({text: "Mr. Megee"})
 
             return message.channel.send({ embeds: [help] });
         }
@@ -113,4 +113,4 @@ const help = new MessageEmbed()
 	.setDescription("`xd)help` -- help\n`xd)hug [person]` -- hug someone\n`xd)nuke [person]` -- nuke someone\n`xd)ping` -- pong\n`xd)pong` -- ping\n`xd)popularity` -- server count\n`xd)userinfo` -- info about you\n`xd)idle` -- The Mr. Megee Idle Game\n`xd)invite` -- Bot/Server invite")
 	.setThumbnail("https://cdn.discordapp.com/attachments/510953636084449316/552848757557821475/Megee.png")
     .setImage("https://cdn.discordapp.com/attachments/467429580953747466/480619950424457227/xd.gif")
-    .setFooter("Mr. Megee")
+    .setFooter({text: "Mr. Megee"})

@@ -68,56 +68,56 @@ module.exports = {
 				var embed1 = new MessageEmbed()
 					.setColor("#FF4500")
 					.setTitle(title)
-					.setAuthor(author_name, '' ,author_url)
+					.setAuthor({name: author_name, url: author_url})
 					.setURL('https://reddit.com' + selection.permalink)
-					.addField(desc, selection.url, false)
+					.addFields({name: desc, value: selection.url})
 					.setImage(selection.url)
-					.setFooter(selection.subreddit_name_prefixed);
+					.setFooter({text: selection.subreddit_name_prefixed});
 				return message.channel.send({ embeds: [embed1] });
 				break;
 			case "link":
 				var embed2 = new MessageEmbed()
 					.setColor("#FF4500")
 					.setTitle(title)
-					.setAuthor(author_name, '' ,author_url)
+					.setAuthor({name: author_name, url: author_url})
 					.setURL('https://reddit.com' + selection.permalink)
-					.addField(desc, selection.url, false)
+					.addFields({name: desc, value: selection.url})
 					.setThumbnail(selection.thumbnail)
-					.setFooter(selection.subreddit_name_prefixed);
+					.setFooter({text: selection.subreddit_name_prefixed});
 				return message.channel.send({ embeds: [embed2] });
 				break;
 			case "self":
 				var embed3 = new MessageEmbed()
 					.setColor("#FF4500")
 					.setTitle(title)
-					.setAuthor(author_name, '' ,author_url)
+					.setAuthor({name: author_name, url: author_url})
 					.setURL('https://reddit.com' + selection.permalink)
 					.setDescription(text)
-					.addField(desc, selection.url, false)
-					.setFooter(selection.subreddit_name_prefixed);
+					.addFields({name: desc, value: selection.url})
+					.setFooter({text: selection.subreddit_name_prefixed});
 				return message.channel.send({ embeds: [embed3] });
 				break;
 			case "hosted:video":
 				var embed4 = new MessageEmbed()
 					.setColor("#FF4500")
 					.setTitle(selection.title)
-					.setAuthor(author_name, '' ,author_url)
+					.setAuthor({name: author_name, url: author_url})
 					.setURL('https://reddit.com' + selection.permalink)
-					.addField(desc, selection.url, false)
+					.addFields({name: desc, value: selection.url})
 					.setThumbnail(selection.thumbnail)
-					.setFooter(selection.subreddit_name_prefixed);
+					.setFooter({text: selection.subreddit_name_prefixed});
 				return message.channel.send({content: post_link/*, embeds: [embed4] */});
 				break;
 			case "rich:video":
 				var embed4 = new MessageEmbed()
 					.setColor("#FF4500")
 					.setTitle(selection.title)
-					.setAuthor(author_name, '' ,author_url)
+					.setAuthor({name: author_name, url: author_url})
 					.setURL('https://reddit.com' + selection.permalink)
 					.setDescription("Click link to watch video.")
-					.addField(desc, selection.url, false)
+					.addFields({name: desc, value: selection.url})
 					.setThumbnail(selection.thumbnail)
-					.setFooter(selection.subreddit_name_prefixed);
+					.setFooter({text: selection.subreddit_name_prefixed});
 				return message.channel.send({ embeds: [embed4] });
 				break;
 		}

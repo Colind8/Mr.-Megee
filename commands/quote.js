@@ -22,7 +22,7 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor("#c6c6c6")
 				.setDescription(`*"` + select.content + `"*`)
-				.setFooter("Submitted by " + select.name)
+				.setFooter({text: "Submitted by " + select.name})
             
             return message.channel.send({embeds: [embed]});
         } else {

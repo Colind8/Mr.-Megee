@@ -1157,11 +1157,16 @@ function calculate_meditatexp(key) {
 const idleInfo = new MessageEmbed()
     .setColor(color)
     .setTitle(idle.info.title)
-    .setAuthor(idle.info.author)
+    .setAuthor({name: idle.info.author})
     .setDescription(idle.info.body)
     .setThumbnail(idle.info.thumbnail)
-    .addField(idle.info.fields[0].name, idle.info.fields[0].description, false)
-    .addField(idle.info.fields[1].name, idle.info.fields[1].description, false)
+	.addFields({
+		name: idle.info.fields[0].name,
+		value: idle.info.fields[0].description
+	},{
+		name: idle.info.fields[1].name,
+		value: idle.info.fields[1].description
+	});
 
 const idleCasino = new MessageEmbed()
     .setColor(color)
@@ -1178,8 +1183,11 @@ function perkbuilder(key, reroll) {
 			.setColor(color)
 			.setTitle(idle.perk.title)
 			.setThumbnail(idle.perklist[key.randperk].image)
-			.addField(idle.perklist[key.randperk].name, perkdesc, false)
-			.setFooter("Perk Points: " + key.perkpoints)
+			.addFields({
+				name: idle.perklist[key.randperk].name, 
+				value: perkdesc
+			})
+			.setFooter({text: "Perk Points: " + key.perkpoints})
 		
 			return idlePerk;
 		} else {
@@ -1188,9 +1196,12 @@ function perkbuilder(key, reroll) {
 				.setTitle(idle.perk.title)
 				.setThumbnail(idle.perk.thumbnail)
 				.setDescription(idle.perk.body)
-				.addField(idle.perklist[key.randperk].name, perkdesc, false)
+				.addFields({
+					name: idle.perklist[key.randperk].name,
+					value: perkdesc
+				})
 				.setImage(idle.perklist[key.randperk].image)
-				.setFooter("Perk Points: " + key.perkpoints)
+				.setFooter({text: "Perk Points: " + key.perkpoints})
 		
 			return idlePerk;
 		}
@@ -1202,8 +1213,11 @@ function perkbuilder(key, reroll) {
 			.setDescription(idle.reroll.body)
 			.setImage(idle.perklist[key.perks[key.perks.length - 1]].image)
 			.setThumbnail(idle.reroll.thumbnail)
-			.addField(idle.perklist[key.perks[key.perks.length - 1]].name, perkdescr, false)
-			.setFooter("Perk Points: " + key.perkpoints)
+			.addFields({
+				name: idle.perklist[key.perks[key.perks.length - 1]].name,
+				value: perkdescr
+			})
+			.setFooter({text: "Perk Points: " + key.perkpoints})
 		
 		return idlePerk;
 	}
@@ -1222,7 +1236,7 @@ function shopbuilder(key) {
 	let iarr = itemnumbers(key);
 	
 	for (i=0; i < sarr.length; i++) {
-		shopitemfield += (i + 1) + ". " + idle.shop.items[sarr[i]].name + " [" + iarr[sarr[i]] + "]\n";
+		shopitemfield += (i + 1) + ") " + idle.shop.items[sarr[i]].name + " [" + iarr[sarr[i]] + "]\n";
 		shopdescfield += "+" + idle.shop.items[sarr[i]].value + " XP per message\n";
 		let itemcost2 = (idle.shop.items[sarr[i]].cost + (Math.pow(iarr[sarr[i]], 2)));
 		if (key.perks.includes(10)) { // discount
@@ -1239,10 +1253,22 @@ function shopbuilder(key) {
 		const idleShop = new MessageEmbed()
 			.setColor(color)
 			.setTitle(idle.shop.title)
-			.setFooter("Coins: " + key.coins)
-			.addField("Items",shopitemfield, true)
-			.addField("Description", shopdescfield, true)
-			.addField("Cost",shopcostfield, true)
+			.setFooter({text: "Coins: " + key.coins})
+			.addFields({
+				name: "Items",
+				value: shopitemfield,
+				inline: true
+			},{
+				name: "Description",
+				value: shopdescfield,
+				inline: true
+				
+			},{
+				name: "Cost",
+				value: shopcostfield,
+				inline: true
+				
+			})
 			
 		return idleShop;
 	} else {
@@ -1251,10 +1277,22 @@ function shopbuilder(key) {
 			.setTitle(idle.shop.title)
 			.setDescription(idle.shop.body)
 			.setThumbnail(idle.shop.thumbnail)
-			.setFooter("Coins: " + key.coins)
-			.addField("Items",shopitemfield, true)
-			.addField("Description", shopdescfield, true)
-			.addField("Cost",shopcostfield, true)
+			.setFooter({text: "Coins: " + key.coins})
+			.addFields({
+				name: "Items",
+				value: shopitemfield,
+				inline: true
+			},{
+				name: "Description",
+				value: shopdescfield,
+				inline: true
+				
+			},{
+				name: "Cost",
+				value: shopcostfield,
+				inline: true
+				
+			})
 			
 		return idleShop;
 	}
@@ -1287,8 +1325,13 @@ function helpbuilder(key) {
 				.setTitle(idle.help.title)
 				.setDescription(idle.help.body)
 				.setThumbnail(idle.help.thumbnail)
-				.addField(idle.help.fields[0].name, idle.help.fields[0].description, false)
-				.addField(idle.help.fields[1].name, helpfield, false)
+				.addFields({
+					name: idle.help.fields[0].name,
+					value: idle.help.fields[0].description
+				},{
+					name: idle.help.fields[1].name,
+					value: helpfield
+				})
 			return idleHelp;
 		}
 	}
@@ -1297,7 +1340,7 @@ function helpbuilder(key) {
 		.setTitle(idle.help.title)
 		.setDescription(idle.help.body)
 		.setThumbnail(idle.help.thumbnail)
-		.addField(idle.help.fields[0].name, idle.help.fields[0].description, false)
+		.addFields({name: idle.help.fields[0].name, value: idle.help.fields[0].description})
 	return idleHelp;
 }
 	
@@ -1335,30 +1378,67 @@ function statsbuilder(key, author) {
 		const idleStats = new MessageEmbed()
 			.setColor(color)
 			.setTitle("Prestige " + key.prestige + ": " + idle.prestige[key.prestige - 1].name)
-			.setAuthor(author + "'s stats")
+			.setAuthor({name: author + "'s stats"})
 			.setDescription(descfield)
-			.addField("XP", key.xp.toLocaleString() + " / " + xpneed.toLocaleString() + " (" + Math.round((key.xp / xpneed) * 100) + "%)", true)
-			.addField("Level", key.level + "/" + levelneed, true)
-			.addField("Coins", "<:Coin:514985713574346758> " + key.coins.toLocaleString(), true)
-			.addField("XP per message", key.xppm.toString(), true)
-			.addField("Perk Points", key.perkpoints.toString(), true)
-			.addField(perkfield, perkline, false)
+			.addFields({
+				name: "XP",
+				value: key.xp.toLocaleString() + " / " + xpneed.toLocaleString() + " (" + Math.round((key.xp / xpneed) * 100) + "%)",
+				inline: true
+			},{
+				name: "Level",
+				value: key.level + "/" + levelneed,
+				inline: true
+			},{
+				name: "Coins",
+				value: "<:Coin:514985713574346758> " + key.coins.toLocaleString(),
+				inline: true
+			},{
+				name: "XP per message",
+				value: key.xppm.toString(),
+				inline: true
+			},{
+				name: "Perk Points",
+				value: key.perkpoints.toString(),
+				inline: true
+			},{
+				name: perkfield,
+				value: perkline,
+				inline: false
+			})
 			
 		return idleStats;
 	} else {
 		const idleStats = new MessageEmbed()
 			.setColor(color)
 			.setTitle("Prestige " + key.prestige + ": " + idle.prestige[key.prestige - 1].name)
-			.setAuthor(author + "'s stats")
+			.setAuthor({name: author + "'s stats"})
 			.setThumbnail(idle.prestige[key.prestige - 1].thumbnail)
 			.setDescription(descfield)
-			.addField("XP", key.xp.toLocaleString() + " / " + xpneed.toLocaleString() + " (" + Math.round((key.xp / xpneed) * 100) + "%)", true)
-			.addField("Level", key.level + "/" + levelneed, true)
-			.addField("Coins", "<:Coin:514985713574346758> " + key.coins.toLocaleString(), true)
-			.addField("XP per message", key.xppm.toString(), true)
-			.addField("Perk Points", key.perkpoints.toString(), true)
-			.addField(perkfield, perkline, false)
-			
+			.addFields({
+				name: "XP",
+				value: key.xp.toLocaleString() + " / " + xpneed.toLocaleString() + " (" + Math.round((key.xp / xpneed) * 100) + "%)",
+				inline: true
+			},{
+				name: "Level",
+				value: key.level + "/" + levelneed,
+				inline: true
+			},{
+				name: "Coins",
+				value: "<:Coin:514985713574346758> " + key.coins.toLocaleString(),
+				inline: true
+			},{
+				name: "XP per message",
+				value: key.xppm.toString(),
+				inline: true
+			},{
+				name: "Perk Points",
+				value: key.perkpoints.toString(),
+				inline: true
+			},{
+				name: perkfield,
+				value: perkline,
+				inline: false
+			})
 		return idleStats;
 	}
 }
@@ -1367,13 +1447,22 @@ function settingsbuilder (key, author) {
 	const idleSettings = new MessageEmbed()
 		.setColor(color)
 		.setTitle(idle.settings.title)
-		.setAuthor(author + "'s settings")
+		.setAuthor({name: author + "'s settings"})
 		.setThumbnail(idle.settings.thumbnail)
 		.setDescription(idle.settings.body)
-		.addField(("[`" + idle.settings.setting[0].name + "`] - " + key.settings.importantnotifications), idle.settings.setting[0].desc)
-		.addField(("[`" + idle.settings.setting[1].name + "`] - " + key.settings.perknotifications), idle.settings.setting[1].desc)
-		.addField(("[`" + idle.settings.setting[3].name + "`] - " + key.settings.minimode), idle.settings.setting[3].desc)
-		.addField(("[`" + idle.settings.setting[5].name + "`] - " + key.settings.paused), idle.settings.setting[5].desc)
+		.addFields({
+			name: "[`" + idle.settings.setting[0].name + "`] - " + key.settings.importantnotifications,
+			value: idle.settings.setting[0].desc
+		},{
+			name: "[`" + idle.settings.setting[1].name + "`] - " + key.settings.perknotifications,
+			value: idle.settings.setting[1].desc
+		},{
+			name: "[`" + idle.settings.setting[3].name + "`] - " + key.settings.minimode,
+			value: idle.settings.setting[3].desc
+		},{
+			name: "[`" + idle.settings.setting[5].name + "`] - " + key.settings.paused,
+			value: idle.settings.setting[5].desc
+		})
 	
 	return idleSettings;
 }
@@ -1408,9 +1497,14 @@ function treebuilder (key) {
 		const idleTree = new MessageEmbed()
 			.setColor(color)
 			.setTitle(idle.tree.title)
-			.addField("__Avalible Prestige Upgrades__",avaliblelist)
-			.addField("__Purchased Prestige Upgrades__",upgradelist)
-			.setFooter("Prestige Tree Tokens: " + key.tokens.toString())
+			.addFields({
+				name: "__Avalible Prestige Upgrades__",
+				value: avaliblelist
+			},{
+				name: "__Purchased Prestige Upgrades__",
+				value: upgradelist
+			})
+			.setFooter({text: "Prestige Tree Tokens: " + key.tokens.toString()})
 		return idleTree;
 	} else {
 		const idleTree = new MessageEmbed()
@@ -1418,9 +1512,14 @@ function treebuilder (key) {
 			.setTitle(idle.tree.title)
 			.setThumbnail(idle.tree.thumbnail)
 			.setDescription(idle.tree.body)
-			.addField("__Avalible Prestige Upgrades__",avaliblelist)
-			.addField("__Purchased Prestige Upgrades__",upgradelist)
-			.setFooter("Prestige Tree Tokens: " + key.tokens.toString())
+			.addFields({
+				name: "__Avalible Prestige Upgrades__",
+				value: avaliblelist
+			},{
+				name: "__Purchased Prestige Upgrades__",
+				value: upgradelist
+			})
+			.setFooter({text: "Prestige Tree Tokens: " + key.tokens.toString()})
 		return idleTree;
 	}
 	
@@ -1464,7 +1563,7 @@ function upgradebuilder (key, upgrade) {
 		.setTitle(idle.upgradelist[upgrade].name)
 		.setThumbnail(idle.tree.thumbnail)
 		.setDescription("*" + idle.upgradelist[upgrade].description + "*\n\nDo `xd)idle tree " + upgrade.toString() + " buy` to get the upgrade\n\n**[ Costs " + (key.tree.length + 1) + " Prestige Tree Tokens ]**")
-		.setFooter("Prestige Tree Tokens: " + key.tokens.toString())
+		.setFooter({text: "Prestige Tree Tokens: " + key.tokens.toString()})
 	
 	return idleUpgrade;
 }
@@ -1483,13 +1582,13 @@ function bankbuilder (key) {
 			const idleBank = new MessageEmbed()
 				.setColor(color)
 				.setTitle(idle.bank.title)
-				.setFooter("Bank Balance: " + key.minigames.bank.toString())
+				.setFooter({text: "Bank Balance: " + key.minigames.bank.toString()})
 			return idleBank;
 		} else {
 			const idleBank = new MessageEmbed()
 				.setColor(color)
 				.setTitle(idle.bank.title)
-				.setFooter("Bank Balance: " + key.minigames.bank.toString())
+				.setFooter({text: "Bank Balance: " + key.minigames.bank.toString()})
 			return idleBank;
 		}
 	} else {
@@ -1499,7 +1598,7 @@ function bankbuilder (key) {
 				.setTitle(idle.bank.title)
 				.setThumbnail(idle.bank.thumbnail)
 				.setDescription(idle.bank.body + idle.bank.invest)
-				.setFooter("Bank Balance: " + key.minigames.bank.toString())
+				.setFooter({text: "Bank Balance: " + key.minigames.bank.toString()})
 			return idleBank;
 		} else {
 			const idleBank = new MessageEmbed()
@@ -1507,7 +1606,7 @@ function bankbuilder (key) {
 				.setTitle(idle.bank.title)
 				.setThumbnail(idle.bank.thumbnail)
 				.setDescription(idle.bank.body)
-				.setFooter("Bank Balance: " + key.minigames.bank.toString())
+				.setFooter({text: "Bank Balance: " + key.minigames.bank.toString()})
 			return idleBank;
 		}
 	}
@@ -1550,7 +1649,7 @@ function journalbuilder (key, journalpage) {
 		
 		const idleJournal = new MessageEmbed()
 			.setColor(color)
-			.setAuthor(idle.journal.title)
+			.setAuthor({name: idle.journal.title})
 			.setTitle(`Prestige ${journalpage}: ` + idle.prestige[journalpage - 1].name)
 			.setThumbnail(idle.prestige[journalpage - 1].thumbnail)
 			.setDescription(journaldesc)
@@ -1577,7 +1676,7 @@ function meditatebuilder (key) {
 			.setTitle(idle.meditate.title)
 			.setThumbnail(idle.meditate.thumbnail)
 			.setDescription(meditatedesc)
-			.addField("You are currently meditating", `You have been meditating for ${medidate} minutes.\nIf you stop meditating now, you can earn ${b_meditatexp} XP.`)
+			.addFields({name: "You are currently meditating", value: `You have been meditating for ${medidate} minutes.\nIf you stop meditating now, you can earn ${b_meditatexp} XP.`})
 		return idleMeditate;
 	} else {
 		const idleMeditate = new MessageEmbed()
@@ -1585,7 +1684,7 @@ function meditatebuilder (key) {
 			.setTitle(idle.meditate.title)
 			.setThumbnail(idle.meditate.thumbnail)
 			.setDescription(meditatedesc)
-			.addField("You are not meditating", "`xd)idle meditate start` to start meditating")
+			.addFields({name: "You are not meditating", value: "`xd)idle meditate start` to start meditating"})
 		return idleMeditate;
 	}
 }
@@ -1872,4 +1971,3 @@ function hypotheticalbuilder (key, hypoarg) {
 	return hypostring;
 	
 }
-

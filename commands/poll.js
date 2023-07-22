@@ -463,64 +463,78 @@ module.exports = {
 				.setColor("#c6c6c6")
 				.setTitle(select.length + " results")
 				.setDescription(descriptionbuilder)
-				.addField("ID",idfieldbuilder,true)
-				.addField("Poll",titlefieldbuilder,true)
-				.setFooter(page + "/" + pages)
+				.addFields({
+					name: "ID",
+					value: idfieldbuilder,
+					inline: true
+				},{
+					name: "Poll",
+					value: titlefieldbuilder,
+					inline: true
+				})
+				.setFooter({text:page + "/" + pages})
 			return message.channel.send({embeds: [listembed]});
 		}
         function sendembed(select) {
-	a = select.VOTES_A;
-	b = select.VOTES_B;
-	t = a + b;
-	
-	words = `<:a_end4:993299735630852106>`;
-	
-	for (i = 0; i < 12; i++) {
-		if (i < (Math.round((a / t) * 12))) { //A MID
-			words += "<:a_mid4:993299736452943882>";
-		} else if (i == (Math.round((a / t) * 12))) { //MID
-			//words += "<a:mid:988990340646207528>";
-			words += "<:mid4:993299739099529287>";
-			words += "<:b_mid4:993299737912545382>";
-		} else if (i > (Math.round((a / t) * 12))) { //B MID
-			words += "<:b_mid4:993299737912545382>";
-		}
-	}
-	if ((Math.round((a / t) * 12)) == 12) {
-		//words += "<a:mid:988990340646207528>";
-		words += "<:mid4:993299739099529287>";
-	}
-	
-	if (a == "0" && b == "0") {
-		//words += "<a:mid:988990340646207528>";
-		words += "<:mid4:993299739099529287>";
-	}
+			a = select.VOTES_A;
+			b = select.VOTES_B;
+			t = a + b;
+			
+			words = `<:a_end4:993299735630852106>`;
+			
+			for (i = 0; i < 12; i++) {
+				if (i < (Math.round((a / t) * 12))) { //A MID
+					words += "<:a_mid4:993299736452943882>";
+				} else if (i == (Math.round((a / t) * 12))) { //MID
+					//words += "<a:mid:988990340646207528>";
+					words += "<:mid4:993299739099529287>";
+					words += "<:b_mid4:993299737912545382>";
+				} else if (i > (Math.round((a / t) * 12))) { //B MID
+					words += "<:b_mid4:993299737912545382>";
+				}
+			}
+			if ((Math.round((a / t) * 12)) == 12) {
+				//words += "<a:mid:988990340646207528>";
+				words += "<:mid4:993299739099529287>";
+			}
+			
+			if (a == "0" && b == "0") {
+				//words += "<a:mid:988990340646207528>";
+				words += "<:mid4:993299739099529287>";
+			}
 
-	words += "<:b_end4:993299737157570693>";
-	
-	if (a > b) {
-		aword = "__" + a.toString() + "__";
-		bword = b.toString();
-	} else if (a < b) {
-		bword = "__" + b.toString() + "__";
-		aword = a.toString();
-	} else {
-		aword = a.toString();
-		bword = b.toString();
-	}
-	
-	var pollembed = new MessageEmbed()
-		.setColor("#c6c6c6")
-		.setAuthor("Submitted by " + select.AUTHOR)
-		.setTitle(select.TITLE + "?")
-		.setDescription(words)
-		.addField("a. " + select.OPTION_A,aword,true)
-		.addField("b. " + select.OPTION_B,bword,true)
-		.addField("__Vote on this poll__","`xd)poll vote "+select.ID+" a`\n`xd)poll vote "+select.ID+" b`")
-		.setFooter("id: " + select.ID)
-		.setTimestamp(select.DATE)
-	return message.channel.send({embeds: [pollembed]});
-}
+			words += "<:b_end4:993299737157570693>";
+			
+			if (a > b) {
+				aword = "__" + a.toString() + "__";
+				bword = b.toString();
+			} else if (a < b) {
+				bword = "__" + b.toString() + "__";
+				aword = a.toString();
+			} else {
+				aword = a.toString();
+				bword = b.toString();
+			}
+			
+			var pollembed = new MessageEmbed()
+				.setColor("#c6c6c6")
+				.setAuthor({name: "Submitted by " + select.AUTHOR})
+				.setTitle(select.TITLE + "?")
+				.setDescription(words)
+				.addFields({
+					name: "a. " + select.OPTION_A,
+					value: aword,
+					inline: true
+				},{
+					name: "b. " + select.OPTION_B,
+					value: bword,
+					inline: true
+				},{
+					name: "__Vote on this poll__",
+					value: "`xd)poll vote "+select.ID+" a`\n`xd)poll vote "+select.ID+" b`"
+				})
+			return message.channel.send({embeds: [pollembed]});
+		}
     },
 };
 
@@ -528,10 +542,23 @@ const helpembed = new MessageEmbed()
 	.setColor("#c6c6c6")
 	.setTitle("Everybody Votes but it's a command")
 	.setDescription("xd)poll allows you and others to create and vote on user made polls. Every poll can only have two questions.\nEach poll has an ID that you can use to find the exact poll again in case you need it.")
-	.addField("`xd)poll`","Get a random poll. Excludes polls you've already voted for.")
-	.addField("`xd)poll create <question>? <option 1>? <option 2>?`","Create a poll. Each question and options HAVE to end with a `?`.\n`<question>` is the question you're asking\n`<option 1>` is the first answer people can choose\n`<option 2>` is the second answer people can choose.")
-	.addField("`xd)poll vote <id> <option>`","Vote on a poll.\n`<id>` is the ID of the poll. It should be on the embed for it.\n`<option>` is which option of the poll you are voting. Should be either \"`a`\" or \"`b`\"")
-	.addField("`xd)poll search <id>`","Returns the poll and its current results by ID.\n`<id>` is the ID of the poll. You'll need to already know it before using this command.")
-	.addField("`xd)poll list [sort] [filter] [page]`","Returns a list of polls.\n\n`[sort]` is how you want the list sorted. Can be `n` for newest, `o` for oldest, `mv` for most voted, or `lv` for least voted.\n`[filter]` filters the list to what you want. Can be `v` for polls you've voted on, `c` for polls you've created, `b` for both filters combined, or `n` for no filter. Adding a `-` in front of the filter will exclude the filtered results rather than only showing the filtered results. example: `xd]poll list mv -b` will show a list of polls sorted by most voted and will exclude any polls you've created or voted on.\n`[page]` is what page of the list you want to show.")
-	.addField("`xd)poll rand`","Get a true random poll. It may include a poll you've already voted for.")
+	.addFields({
+		name: "`xd)poll`",
+		value: "Get a random poll. Excludes polls you've already voted for."
+	},{
+		name: "`xd)poll create <question>? <option 1>? <option 2>?`",
+		value: "Create a poll. Each question and options HAVE to end with a `?`.\n`<question>` is the question you're asking\n`<option 1>` is the first answer people can choose\n`<option 2>` is the second answer people can choose."
+	},{
+		name: "`xd)poll vote <id> <option>`",
+		value: "Vote on a poll.\n`<id>` is the ID of the poll. It should be on the embed for it.\n`<option>` is which option of the poll you are voting. Should be either \"`a`\" or \"`b`\""
+	},{
+		name: "`xd)poll search <id>`",
+		value: "Returns the poll and its current results by ID.\n`<id>` is the ID of the poll. You'll need to already know it before using this command."
+	},{
+		name: "`xd)poll list [sort] [filter] [page]`",
+		value: "Returns a list of polls.\n\n`[sort]` is how you want the list sorted. Can be `n` for newest, `o` for oldest, `mv` for most voted, or `lv` for least voted.\n`[filter]` filters the list to what you want. Can be `v` for polls you've voted on, `c` for polls you've created, `b` for both filters combined, or `n` for no filter. Adding a `-` in front of the filter will exclude the filtered results rather than only showing the filtered results. example: `xd]poll list mv -b` will show a list of polls sorted by most voted and will exclude any polls you've created or voted on.\n`[page]` is what page of the list you want to show."
+	},{
+		name: "`xd)poll rand`",
+		value: "Get a true random poll. It can include a poll you've already voted for."
+	})
 
