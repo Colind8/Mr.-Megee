@@ -120,7 +120,7 @@ module.exports = {
 				coincost = 100; //how much each coin costs in xp
 				
 				if (key.perks.includes(12)) { //perks that reduce the cost
-					freebiechance = 30;
+					freebiemult = .30;
 					if (key.perks.includes(1)) {
 						coincost = coincost - 15;
 					}
@@ -128,7 +128,7 @@ module.exports = {
 						coincost = coincost - 15;
 					}
 				} else {
-					freebiechance = 10;
+					freebiemult = .10;
 					if (key.perks.includes(1)) {
 						coincost = coincost - 10;
 					}
@@ -160,12 +160,7 @@ module.exports = {
 				}
 				
 				if (key.perks.includes(9)) { //If you have freebie, add extra coins
-					let oldconvert = convertamount;
-					for (i = 0; i < oldconvert; i++) {
-						if (Math.floor(Math.random() * freebiechance) == 0) {
-							convertamount = convertamount + 1;
-						}
-					}
+					convertamount += Math.round(convertamount * freebiemult);
 				}
 				
 				key.coins = key.coins + convertamount; //Add coins
