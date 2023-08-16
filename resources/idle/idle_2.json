@@ -649,8 +649,8 @@
         },
         {
             "name": "Freebie",
-            "description": "Random chance to gain a free coin when converting. (for every coin gained)",
-			"spiderweb": "High chance to gain a free coin when converting. (for every coin gained)",
+            "description": "Gain free coins when converting.",
+			"spiderweb": "Gain even more free coins when converting.",
 			"status": "The bank of Mr. Megee grants you rewards for using their services!",
             "image": "https://cdn.discordapp.com/attachments/875265776305721395/875599936106922024/freebie.png",
             "emote": "<:freebie:875602340361682995>"
