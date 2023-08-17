@@ -160,7 +160,7 @@ module.exports = {
 				}
 				
 				if (key.perks.includes(9)) { //If you have freebie, add extra coins
-					convertamount += Math.round(convertamount * freebiemult) + (Math.floor(Math.rand() * 10) - 5);
+					convertamount += (Math.round(convertamount * freebiemult)) + (Math.floor(Math.random() * 10) - 5);
 				}
 				
 				key.coins = key.coins + convertamount; //Add coins
