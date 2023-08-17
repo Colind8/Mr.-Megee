@@ -25,21 +25,15 @@ module.exports = {
         }
         
         if (args[0]) {
-            const user = getUserFromMention(args[0]);
+            user = getUserFromMention(args[0]);
             if(!user) {
                 return message.reply('Who?')
             }
-
-            for (i = 0; i < pn-1; i++) {
-                message.channel.send(`${user} is being nuked!`);
-            }
-            return message.channel.send(`${user} has been nuked!`);
-        }
-
-        for (i = 0; i < pn-1; i++) {
-                message.channel.send(`${message.author} is being nuked!`);
-            }
-        return message.channel.send(`${message.author} has been nuked!`);
+        } else {
+			user = message.author;
+		}
+		
+		return nuke(user);
 
         function getUserFromMention(mention) {
 	        if (!mention) return;
@@ -54,6 +48,22 @@ module.exports = {
 		    return message.mentions.users.get(mention);
 	        }
         }
+		
+		async function nuke(user) {
+			for (i = 0; i < pn-1; i++) {
+                await timeout(1000);
+				message.channel.send(`${user} is being nuked!`);
+            }
+			
+			return message.channel.send(`${user} has been nuked!`);
+		}
+		
+		function timeout(ms) {
+			//return setTimeout(actually_send_message, ms);
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+		
+		
     },
 };
 
