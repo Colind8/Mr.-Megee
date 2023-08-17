@@ -1,5 +1,5 @@
 {
-	"ver": 2,
+	"ver": 3,
 	"xp": 0,
 	"xppm": 1,
 	"level": 0,
@@ -36,10 +36,8 @@
 	},
 	"settings": {
 		"perknotifications": true,
-		"pawnnotifications": true,
 		"importantnotifications": true,
 		"minimode": false,
-		"autoprestige": false,
 		"paused": false
 	}
 }

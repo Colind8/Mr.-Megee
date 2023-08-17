@@ -1013,6 +1013,26 @@ function update(key, author) { //Updates UserData
 		
 		return "Your Idle profile has been updated!";
 	}
+	
+	switch (key.ver) {
+		case 2:
+			let v_settings = {
+				perknotifications: key.settings.perknotifications,
+				importantnotifications: key.settings.importantnotifications,
+				minimode: key.settings.minimode,
+				paused: key.settings.paused
+			}
+			
+			key.settings = v_settings;
+			try {
+				db.run(`UPDATE idle SET data = ? WHERE userid = ?`, [JSON.stringify(key), author]);
+			} catch (error) {
+				console.log(error);
+				return "An error has occured!"
+			}
+			
+			return "Your Idle profile has been updated!";
+	}
 }
 
 function randperk(key) { //Generates the randperk
