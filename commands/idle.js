@@ -187,7 +187,8 @@ module.exports = {
 				let sarr = shopnumbers(key);
 				let shopallow = false;
 				
-				for (i = 0; (i < sarr.length || shopallow == true); i++) {
+				for (i = 0; (i < sarr.length && shopallow == false); i++) {
+					
 					if (Number(args[1]) - 1 == i) {
 						shopallow = true;
 					}
@@ -196,7 +197,6 @@ module.exports = {
 				if (!shopallow) {
 					return message.channel.send("Invalid item ID");
 				}
-				
 				itemcost = idle.shop.items[sarr[args[1] - 1]].cost + (Math.pow(shoparray[sarr[args[1] - 1]], 2));
 				
 				if (key.perks.includes(10)) { // discount
@@ -246,8 +246,6 @@ module.exports = {
 						key.items.tools++;
 						break;
 				}
-				
-				
 				
 				try {
 					db.run(`UPDATE idle SET data = ? WHERE userid = ?`, [JSON.stringify(key), message.author.id]);
@@ -843,7 +841,7 @@ module.exports = {
 				xd)idle hypothetical
 			============================*/
 			if (args[0] == "hypothetical") {
-				return message.channel.send(hypotheticalbuilder(key, args[1]));
+				return message.channel.send(hypotheticalbuilder(key, args[1], args[2]));
 			}
 			
 			/*==========================
@@ -869,10 +867,10 @@ module.exports = {
 				}
 				
 				if (!args[1]) {
-					return message.channel.send("Cheat Commands: give, tokens, prestige");
+					return message.channel.send("Cheat Commands: give_xp, set_tokens, set_prestige, set_coins, set_xp");
 				}
 				
-				if (args[1] == "give") {
+				if (args[1] == "give_xp") {
 					key.xp = key.xp + Number(args[2]);
 					
 					levelsupped = 0;
@@ -949,12 +947,20 @@ module.exports = {
 					}
 				}
 				
-				if (args[1] == "tokens") {
+				if (args[1] == "set_tokens") {
 					key.tokens = key.tokens + Number(args[2]);
 				}
 				
-				if (args[1] == "prestige") {
+				if (args[1] == "set_prestige") {
 					key.prestige = Number(args[2]);
+				}
+				
+				if (args[1] == "set_coins") {
+					key.coins = Number(args[2]);
+				}
+				
+				if (args[1] == "set_xp") {
+					key.xp = Number(args[2]);
 				}
 				try {
 					db.run(`UPDATE idle SET data = ? WHERE userid = ?`, [JSON.stringify(key), message.author.id]);
@@ -1684,16 +1690,51 @@ function meditatebuilder (key) {
 	}
 }
 
-function hypotheticalbuilder (key, hypoarg) {
+function hypotheticalbuilder (key, hypoarg, hypoarg2) {
 	newxp = key.xppm;
-	hypostring = "Let's say, hypothetically, you send a message... \n";
+	
+	// hypoarg  : both, web, friends -- whether the message has a link, ping, or both
+	// hypoarg2 : max, min, avg      -- what you'd like to measure for in terms of XP gain
+	
+	switch (hypoarg2) { 
+		case "max":
+			hypostring = "Let's say, hypothetically, you send a message with the highest possible chances... \n";
+			break;
+		case "min":
+			hypostring = "Let's say, hypothetically, you send a message with the lowest possible chances... \n";
+			break;
+		case "avg":
+			hypostring = "Let's say, hypothetically, you send a message with the most average possible chances... \n";
+			break;
+		default:
+			hypostring = "Let's say, hypothetically, you send a message... \n";
+			break;
+	}
+	
 	hypostring += "Initially you'll start with **" + newxp + "** xp.\n\n";
 	
 	if (key.perks.includes(12)) { // SPIDERWEB
 		hypostring += "You have the **Spiderweb** perk, so the effects of perks are heightened.\n\n"
 		if(key.perks.includes(8)) { // gambling
-			newxp = (key.xppm + (Math.floor(Math.random() * (25*key.level)) - (5*key.level)));
-			hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (25*key.level));
+			switch (hypoarg2) { 
+				case "max":
+					newxp = (key.xppm + (newxp + (25*key.level)));
+					hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (25*key.level));
+					break;
+				case "min":
+					newxp = (key.xppm + (newxp - (5*key.level)));
+					hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (25*key.level));
+					break;
+				case "avg":
+					newxp = (key.xppm + (newxp + (11*key.level)));
+					hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (25*key.level)) + ", averaging out to " + (newxp + (6*key.level));
+					break;
+				default:
+					newxp = (key.xppm + (Math.floor(Math.random() * (25*key.level)) - (5*key.level)));
+					hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (25*key.level));
+					break;
+			}
+			
 			hypostring += ". In this case, you get **" + newxp + "** xp.\n\n";
 			
 		}
@@ -1813,8 +1854,25 @@ function hypotheticalbuilder (key, hypoarg) {
 	
 	if (!(key.perks.includes(12))) { // Not spiderweb
 		if(key.perks.includes(8)) { // gambling
-			newxp = (key.xppm + (Math.floor(Math.random() * (15*key.level)) - (5*key.level)));
-			hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (15*key.level));
+			switch (hypoarg2) { 
+				case "max":
+					newxp = (key.xppm + (newxp + (15*key.level)));
+					hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (15*key.level));
+					break;
+				case "min":
+					newxp = (key.xppm + (newxp - (5*key.level)));
+					hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (15*key.level));
+					break;
+				case "avg":
+					newxp = (key.xppm + (newxp + (11*key.level)));
+					hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (15*key.level)) + ", averaging out to " + (newxp + (6*key.level));
+					break;
+				default:
+					newxp = (key.xppm + (Math.floor(Math.random() * (25*key.level)) - (5*key.level)));
+					hypostring += "You have gambling which grants you xp between " + (newxp - (5*key.level)) + " and " + (newxp + (15*key.level));
+					break;
+			}
+			
 			hypostring += ". In this case, you get **" + newxp + "** xp.\n\n";
 		}
 		
