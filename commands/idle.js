@@ -1016,6 +1016,7 @@ function update(key, author) { //Updates UserData
 	
 	switch (key.ver) {
 		case 2:
+			key.ver = 3;
 			let v_settings = {
 				perknotifications: key.settings.perknotifications,
 				importantnotifications: key.settings.importantnotifications,
