@@ -48,7 +48,7 @@ client.on('messageCreate', async message => {
 			if(results) {
 				var key = JSON.parse(results.data);
 				
-				if (key.ver < 2) { // if version is not 2 or 3
+				if (!key.ver) { // if version is not 2 or 3
 					return;
 				}
 				
