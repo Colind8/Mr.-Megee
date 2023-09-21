@@ -120,7 +120,7 @@ client.on('messageCreate', async message => {
 					0
 				], (error) => {
 					message.react('👁');
-				}
+				});
 			}
 		});
 
