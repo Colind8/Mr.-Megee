@@ -100,6 +100,29 @@ client.on('messageCreate', async message => {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const command = args.shift().toLowerCase();
+	
+	db.get(`SELECT * FROM idle WHERE userid = ?`,[message.author.id], (error, results) => {
+			if (error) {
+				throw error;
+			}
+			
+			if(!results) {
+				db.run(`INSERT INTO users (userid, name, bio, profilepic, image, color, pissometer, pisscooldown, nukecooldown, nukesday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [
+					message.author.id,
+					message.author.displayName,
+					`Created <t:${Math.floor(user.createdAt.getTime() / 1000)}:R>`,
+					user.displayAvatarURL({ format: 'png', size: 1024}),
+					``,
+					'#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6),
+					0,
+					200,
+					0,
+					0
+				], (error) => {
+					message.react('👁');
+				}
+			}
+		});
 
     if (!client.commands.has(command)) {
         let length = unrecognizedCommands.data.length;
