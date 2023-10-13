@@ -530,8 +530,11 @@ module.exports = {
 					value: bword,
 					inline: true
 				},{
-					name: "__Vote on this poll__",
-					value: "`xd)poll vote "+select.ID+" a`\n`xd)poll vote "+select.ID+" b`"
+					name: `__Vote for ${select.OPTION_A}__`,
+					value: "`xd)poll vote "+select.ID+" a`"
+				},{
+					name: `__Vote for ${select.OPTION_B}__`,
+					value: "`xd)poll vote "+select.ID+" b`"
 				})
 			return message.channel.send({embeds: [pollembed]});
 		}
