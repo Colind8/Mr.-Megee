@@ -531,10 +531,10 @@ module.exports = {
 					inline: true
 				},{
 					name: `__Vote for ${select.OPTION_A}__`,
-					value: "`xd)poll vote "+select.ID+" a`"
+					value: "xd)poll vote "+select.ID+" a"
 				},{
 					name: `__Vote for ${select.OPTION_B}__`,
-					value: "`xd)poll vote "+select.ID+" b`"
+					value: "xd)poll vote "+select.ID+" b"
 				})
 			return message.channel.send({embeds: [pollembed]});
 		}
