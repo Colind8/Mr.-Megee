@@ -84,7 +84,7 @@ module.exports = {
 					.setTitle(results.name)
 					.setDescription(results.bio)
 					.setThumbnail(results.profilepic)
-					.setImage(results.images)
+					.setImage(results.image)
 					.setFooter({ text: results.userid.toString(), size: 1024 })
 					.setColor(results.color);
 
