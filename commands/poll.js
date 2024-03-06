@@ -516,11 +516,14 @@ module.exports = {
 				bword = b.toString();
 			}
 			
+			let newdate = new Date(Number(select.DATE));
+			
 			var pollembed = new MessageEmbed()
 				.setColor("#c6c6c6")
 				.setAuthor({name: "Submitted by " + select.AUTHOR})
 				.setTitle(select.TITLE + "?")
 				.setDescription(words)
+				.setFooter({ text: `${newdate.toUTCString()}`})
 				.addFields({
 					name: "a. " + select.OPTION_A,
 					value: aword,
