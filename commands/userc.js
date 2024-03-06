@@ -46,8 +46,9 @@ module.exports = {
 					return message.channel.send("Name must be under 256 characters!");
 				}
 				try {
-					db.run(`UPDATE users SET name = ? WHERE userid = ?`, [args[1], message.author.id]);
-					return message.channel.send(`Changed name from ${results.name} to ${args[1]}`);
+					nametext = message.content.slice(prefix.length + "userc name".length).trim();
+					db.run(`UPDATE users SET name = ? WHERE userid = ?`, [nametext, message.author.id]);
+					return message.channel.send(`Changed name from ${results.name} to ${nametext}`);
 				} catch (error) {
 					console.log(error);
 					return message.channel.send("An error has occured!");
@@ -59,7 +60,8 @@ module.exports = {
 					return message.channel.send("Bio must be under 4096 characters!");
 				}
 				try {
-					db.run(`UPDATE users SET bio = ? WHERE userid = ?`, [args[1], message.author.id]);
+					biotext = message.content.slice(prefix.length + "userc bio".length).trim();
+					db.run(`UPDATE users SET bio = ? WHERE userid = ?`, [biotext, message.author.id]);
 					return message.channel.send(`Changed bio successfully!`);
 				} catch (error) {
 					console.log(error);
