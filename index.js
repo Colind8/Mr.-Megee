@@ -23,6 +23,7 @@ for (const file of commandFiles) {
 
 
 client.once('ready', () => {
+	client.user.setAvatar("./resources/megee.gif");
     console.log('\n+---==| Mr. Megee |==---');
 	console.log('| Ready!');
     console.log('| Serving on ' + client.guilds.cache.size + ' servers');
