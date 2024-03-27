@@ -42,6 +42,7 @@
         {
             "name":"Research",
             "thumbnail":"https://media.discordapp.net/attachments/875265776305721395/875265986834628628/01.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304190108565546/prestige_1.png",
             "lore":"*You immediately get to work on Research and Development.*",
             "status": [
                 "\"Hmm. A little this.. A little that...\"",
@@ -57,6 +58,7 @@
         {
             "name":"Planning",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884382458613760/02.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304208416571402/prestige_2.png",
             "lore":"*Research has concluded and now it's time to start planning.*",
             "status": [
                 "\"Hm. Carry the 2, cancel those out. Aha!\"",
@@ -75,6 +77,7 @@
         {
             "name":"Gather wood",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884385218490409/03.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304214779334728/prestige_3.png",
             "lore":"*Planning concluded. First you need to gather wood for some tools.*",
             "status": [
                 "You use the power of your fist to gather wood.",
@@ -93,6 +96,7 @@
         {
             "name":"Create tools",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884388636852244/04.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304226686959786/prestige_4.png",
             "lore":"*Now that you got plenty of wood, you must create tools to help you with construction.*",
             "status": [
                 "You craft an epic sword!",
@@ -112,6 +116,7 @@
         {
             "name":"Automate the process",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884391887425667/05.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304235847188600/prestige_5.png",
             "lore":"*With your new tools, now you can automate the process. What process? Err I don't know.*",
             "status": [
                 "You create something straight from a Dr. Suess book.",
@@ -128,6 +133,7 @@
         {
             "name":"Mine for minerals",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884395951689799/06.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304249848041482/prestige_6.png",
             "lore":"*You're going to need some minerals for construction, there's a cave nearby you can use to go deep.*",
             "status": [
                 "You go mining at night. Big mistake.",
@@ -148,6 +154,7 @@
         {
             "name":"Smelt ingots",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884399634288710/07.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304266750955671/prestige_7.png",
             "lore":"*With your newly aquired ores, you'll need to smelt them into ingots to be able to use them effectively.*",
             "status": [
                 "The ores are smelting",
@@ -164,6 +171,7 @@
         {
             "name":"Construct Shell",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884403304333322/08.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304295628869762/prestige_8.png",
             "lore":"*Now it's time to actually start construction. First you must build the shell of the Humanator.*",
             "status": [
                 "You use tree sap as glue.",
@@ -181,6 +189,7 @@
         {
             "name":"Create glass",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884406378745898/09.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304302855524423/prestige_9.png",
             "lore":"*Wait you forgot glass, go create some real quick!*",
             "status": [
                 "You search everywhere for sand.",
@@ -199,6 +208,7 @@
         {
             "name":"Solder Circuits",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884410002636830/10.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304318693212282/prestige_10.png",
             "lore":"*You actually found sand in a sandbox and you create the glass! Time for the grueling process of soldering!*",
             "status": [
                 "How are you soldering? Hell if I know.",
@@ -216,6 +226,7 @@
         {
             "name":"Wiring",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884413098000414/11.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304329661190284/prestige_11.png",
             "lore":"*Now you gotta connect everything together.*",
             "status": [
                 "You connect the red wire to the junction box.",
@@ -235,6 +246,7 @@
         {
             "name":"Construct Tube",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884433192923176/12.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304339715199106/prestige_12.png",
             "lore":"*Might as well take a break from electronics by constructing the glass tube the subject will sit in.*",
             "status": [
                 "You realize a person might not fit in a 5cm tube.",
@@ -249,6 +261,7 @@
         {
             "name":"Create Input Systems",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884444857290763/13.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304350796284014/prestige_13.png",
             "lore":"*You'll need a way to actually activate your machine, a simple button should do the trick.*",
             "status": [
                 "You spend five months making a button."
@@ -257,6 +270,7 @@
         {
             "name":"Gather Human",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884449752047627/14.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304365887393893/prestige_14.png",
             "lore":"*You need a subject to transform your body. This won't be pretty.*",
             "status": [
                 "You contemplate what you're about to do.",
@@ -275,6 +289,7 @@
         {
             "name":"Activation",
             "thumbnail":"https://cdn.discordapp.com/attachments/875265776305721395/875884454609027072/15.png",
+			"image": "https://cdn.discordapp.com/attachments/1002331238893355079/1217304375983341659/prestige_15.png",
             "lore":"*With the \\*(ahem)\\* subject in place, it's time to actually activate the machine! This is the home stretch!*",
             "status": [
                 "You feel your molecules re-arranging.",

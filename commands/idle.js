@@ -449,7 +449,23 @@ module.exports = {
 					return message.channel.send("An error has occured!");
 				}
 				
-				return message.channel.send(idle.prestige[key.prestige - 1].lore + "\n\nEverything has been reset as per the rules of prestige. Good luck on reaching prestige again!");
+				if (idle.prestige[key.prestige - 1].image) {
+					/*return message.channel.send({
+						content: idle.prestige[key.prestige - 1].lore + "\n\nEverything has been reset as per the rules of prestige. Good luck on reaching prestige again!",
+						files: [idle.prestige[key.prestige - 1].image]
+					});*/
+					const idlePrestige = new MessageEmbed()
+						.setImage(idle.prestige[key.prestige - 1].image);
+						
+					return message.channel.send({
+						content: idle.prestige[key.prestige - 1].lore + "\n\nEverything has been reset as per the rules of prestige. Good luck on reaching prestige again!",
+						embeds: [idlePrestige]
+					});
+				} else {
+					return message.channel.send(idle.prestige[key.prestige - 1].lore + "\n\nEverything has been reset as per the rules of prestige. Good luck on reaching prestige again!");
+				}
+				
+				
 			}
 		
 			/*==========================
@@ -1675,6 +1691,7 @@ function journalbuilder (key, journalpage) {
 			.setTitle(`Prestige ${journalpage}: ` + idle.prestige[journalpage - 1].name)
 			.setThumbnail(idle.prestige[journalpage - 1].thumbnail)
 			.setDescription(journaldesc)
+			.setImage(idle.prestige[journalpage - 1].image)
 		return idleJournal;
 	}	
 }
