@@ -1,7 +1,7 @@
 const config = require('../config.json');
 const fs = require('fs');
 const prefix = config.prefix;
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const sqlite = require('sqlite3').verbose();
 const db = new sqlite.Database('./megee.db', sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE);
 
@@ -177,102 +177,9 @@ module.exports = {
 			if (!(Number.isInteger(Number(args[1])))) {
 				return message.channel.send("ID must be a ten digit number.");
 			}
-			searchid = Number(args[1]);
 			
-			db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[message.author.id], (error, results) => {
-				if (error) {
-					throw error;
-				}
-				try {
-					votedpolls = JSON.parse(results.VOTE_ARRAY).data;
-					if (votedpolls.includes(searchid)) {
-						return message.channel.send("You already voted for this poll!");
-					}
-				} catch {}
-				
-				db.get(`SELECT * FROM polls WHERE ID = ? AND NOT TITLE GLOB '~~!@*'`,[searchid], (error, data) => {
-					if (error) {
-						throw error;
-					}
-					if (data == undefined){
-						return message.channel.send("Invalid ID.");
-					}
-					
-					if (!(args[2] == "a" || args[2] ==  "b")) {
-						return message.channel.send("You must use either \"`a`\" or \"`b`.\"");
-					}
-					
-					if (args[2] == "a") {
-						data.VOTES_A++;
-						data.VOTES_TOTAL++;
-						//console.log("Arived here");
-						db.run("PRAGMA busy_timeout = 30000");
-						db.run(`UPDATE polls SET VOTES_A = ?, VOTES_TOTAL = ? WHERE ID = ?`,[data.VOTES_A,data.VOTES_TOTAL,searchid],(error) => {
-							//console.log("And here");
-							if (error) {
-								throw error;
-							}
-							sendembed(data);
-							db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[message.author.id], (error, results) => {
-								if(error) {
-									return console.log(error);
-								}
-								
-								if(results != undefined) {
-									votearray = JSON.parse(results.VOTE_ARRAY);
-									
-									votearray.data.push(searchid);
-									
-									db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), message.author.id]);
-								} else {
-									db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [message.author.id, `{"data":[]}`, `{"data":[]}`], (error) => {
-										votearray = JSON.parse(`{"data":[]}`);
-										
-										votearray.data.push(searchid);
-									
-										db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), message.author.id]);
-									});
-								}
-							});
-						});
-					} else if (args[2] == "b") {
-						data.VOTES_B++;
-						data.VOTES_TOTAL++;
-						db.run("PRAGMA busy_timeout = 30000");
-						db.run(`UPDATE polls SET VOTES_B = ?, VOTES_TOTAL = ? WHERE ID = ?`,[data.VOTES_B,data.VOTES_TOTAL,searchid],(error) => {
-							if (error) {
-								throw error;
-							}
-							
-							sendembed(data);
-							db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[message.author.id], (error, results) => {
-								if(error) {
-									return console.log(error);
-								}
-								
-								if(results != undefined) {
-									votearray = JSON.parse(results.VOTE_ARRAY);
-									
-									votearray.data.push(searchid);
-									
-									db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), message.author.id]);
-								} else {
-									db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [message.author.id, `{"data":[]}`, `{"data":[]}`], (error) => {
-										votearray = JSON.parse(`{"data":[]}`);
-										
-										votearray.data.push(searchid);
-									
-										db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), message.author.id]);
-									});
-								}
-							});
-						});
-					}
-					
-					
-				});
-			});
-		}
+			return vote(message.author.id, Number(args[1]), args[2]);
+			}
 		
 		if (args[0] == "search" || args[0] == "s") { //SEARCH
 			if (!(Number.isInteger(Number(args[1])))) {
@@ -539,9 +446,172 @@ module.exports = {
 					name: `__Vote for ${select.OPTION_B}__`,
 					value: "xd)poll vote "+select.ID+" b"
 				})
-			return message.channel.send({embeds: [pollembed]});
+			
+			const row = new MessageActionRow()
+				.addComponents(
+					new MessageButton()
+						.setCustomId(`vote_a-${select.ID}`)
+						.setLabel('Vote A')
+						.setStyle('DANGER')
+				)
+				.addComponents(
+					new MessageButton()
+						.setCustomId(`vote_b-${select.ID}`)
+						.setLabel('Vote B')
+						.setStyle('SUCCESS')
+				)
+				
+			const collector = message.channel.createMessageComponentCollector({
+				
+			});
+			collector.on('collect', i => {
+				//i.message.delete();
+				//console.log("collected " + i.user.id);
+				//console.log("1")
+				
+				db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[i.user.id], (error, results) => {
+					//console.log("2")
+					if (error) {
+						throw error;
+					}
+					//console.log("3")
+					try {
+						votedpolls = JSON.parse(results.VOTE_ARRAY).data;
+						//console.log("4")
+						//console.log(Number(i.customId.slice(7,17)));
+						if (votedpolls.includes(Number(i.customId.slice(7,17)))) {
+							//console.log("5")
+							return i.reply({content:"You already voted for this poll!",ephemeral: true});
+							
+						} else {
+							//console.log("6")
+							collector.stop();
+							return i.message.delete();
+							
+						}
+					} catch {}
+				})
+			});
+			collector.on('end', collection => {
+				collection.forEach(click => {
+					//console.log(click.user.id, click.customId);
+					//console.log(click.customId.slice(7,17));
+					/*
+					db.get(`SELECT * FROM polls WHERE ID = ? AND NOT TITLE GLOB '~~!@*'`,[click.customId.slice(7,17)], (error, data) => {
+						if (data == undefined) {
+							return message.channel.send("Invalid ID.");
+						}
+						
+						sendembed(data);
+					});*/
+					vote(click.user.id, Number(click.customId.slice(7,17)), click.customId.slice(5,6));
+				})
+				
+				
+			})
+			
+			return message.channel.send({
+				embeds: [pollembed],
+				components: [row]
+			});
 		}
-    },
+		function vote(voter, searchid, votechoice) {
+			db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
+				if (error) {
+					throw error;
+				}
+				try {
+					votedpolls = JSON.parse(results.VOTE_ARRAY).data;
+					if (votedpolls.includes(searchid)) {
+						return message.channel.send("You already voted for this poll!");
+					}
+				} catch {}
+				
+				db.get(`SELECT * FROM polls WHERE ID = ? AND NOT TITLE GLOB '~~!@*'`,[searchid], (error, data) => {
+					if (error) {
+						throw error;
+					}
+					if (data == undefined){
+						return message.channel.send("Invalid ID.");
+					}
+					
+					if (!(votechoice == "a" || votechoice ==  "b")) {
+						return message.channel.send("You must use either \"`a`\" or \"`b`.\"");
+					}
+					
+					if (votechoice == "a") {
+						data.VOTES_A++;
+						data.VOTES_TOTAL++;
+						//console.log("Arived here");
+						db.run("PRAGMA busy_timeout = 30000");
+						db.run(`UPDATE polls SET VOTES_A = ?, VOTES_TOTAL = ? WHERE ID = ?`,[data.VOTES_A,data.VOTES_TOTAL,searchid],(error) => {
+							//console.log("And here");
+							if (error) {
+								throw error;
+							}
+							sendembed(data);
+							db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
+								if(error) {
+									return console.log(error);
+								}
+								
+								if(results != undefined) {
+									votearray = JSON.parse(results.VOTE_ARRAY);
+									
+									votearray.data.push(searchid);
+									
+									db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
+								} else {
+									db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [voter, `{"data":[]}`, `{"data":[]}`], (error) => {
+										votearray = JSON.parse(`{"data":[]}`);
+										
+										votearray.data.push(searchid);
+									
+										db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
+									});
+								}
+							});
+						});
+					} else if (votechoice == "b") {
+						data.VOTES_B++;
+						data.VOTES_TOTAL++;
+						db.run("PRAGMA busy_timeout = 30000");
+						db.run(`UPDATE polls SET VOTES_B = ?, VOTES_TOTAL = ? WHERE ID = ?`,[data.VOTES_B,data.VOTES_TOTAL,searchid],(error) => {
+							if (error) {
+								throw error;
+							}
+							
+							sendembed(data);
+							db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
+								if(error) {
+									return console.log(error);
+								}
+								
+								if(results != undefined) {
+									votearray = JSON.parse(results.VOTE_ARRAY);
+									
+									votearray.data.push(searchid);
+									
+									db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
+								} else {
+									db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [voter, `{"data":[]}`, `{"data":[]}`], (error) => {
+										votearray = JSON.parse(`{"data":[]}`);
+										
+										votearray.data.push(searchid);
+									
+										db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
+									});
+								}
+							});
+						});
+					}
+					
+					
+				});
+			});
+		
+		}
+	},
 };
 
 const helpembed = new MessageEmbed()
