@@ -461,58 +461,60 @@ module.exports = {
 						.setStyle('SUCCESS')
 				)
 				
-			const collector = message.channel.createMessageComponentCollector({
-				
-			});
-			collector.on('collect', i => {
-				//i.message.delete();
-				//console.log("collected " + i.user.id);
-				//console.log("1")
-				
-				db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[i.user.id], (error, results) => {
-					//console.log("2")
-					if (error) {
-						throw error;
-					}
-					//console.log("3")
-					try {
-						votedpolls = JSON.parse(results.VOTE_ARRAY).data;
-						//console.log("4")
-						//console.log(Number(i.customId.slice(7,17)));
-						if (votedpolls.includes(Number(i.customId.slice(7,17)))) {
-							//console.log("5")
-							return i.reply({content:"You already voted for this poll!",ephemeral: true});
-							
-						} else {
-							//console.log("6")
-							collector.stop();
-							return i.message.delete();
-							
-						}
-					} catch {}
-				})
-			});
-			collector.on('end', collection => {
-				collection.forEach(click => {
-					//console.log(click.user.id, click.customId);
-					//console.log(click.customId.slice(7,17));
-					/*
-					db.get(`SELECT * FROM polls WHERE ID = ? AND NOT TITLE GLOB '~~!@*'`,[click.customId.slice(7,17)], (error, data) => {
-						if (data == undefined) {
-							return message.channel.send("Invalid ID.");
-						}
-						
-						sendembed(data);
-					});*/
-					vote(click.user.id, Number(click.customId.slice(7,17)), click.customId.slice(5,6));
-				})
-				
-				
-			})
+			
 			
 			return message.channel.send({
 				embeds: [pollembed],
 				components: [row]
+			}).then((newmessage) => {
+				const collector = newmessage.createMessageComponentCollector({
+				
+				});
+				collector.on('collect', i => {
+					//i.message.delete();
+					//console.log("collected " + i.user.id);
+					//console.log("1")
+					
+					db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[i.user.id], (error, results) => {
+						//console.log("2")
+						if (error) {
+							throw error;
+						}
+						//console.log("3")
+						try {
+							votedpolls = JSON.parse(results.VOTE_ARRAY).data;
+							//console.log("4")
+							//console.log(Number(i.customId.slice(7,17)));
+							if (votedpolls.includes(Number(i.customId.slice(7,17)))) {
+								//console.log("5")
+								return i.reply({content:"You already voted for this poll!",ephemeral: true});
+								
+							} else {
+								//console.log("6")
+								collector.stop();
+								return i.newmessage.delete();
+								
+							}
+						} catch {}
+					})
+				});
+				collector.on('end', collection => {
+					collection.forEach(click => {
+						//console.log(click.user.id, click.customId);
+						//console.log(click.customId.slice(7,17));
+						/*
+						db.get(`SELECT * FROM polls WHERE ID = ? AND NOT TITLE GLOB '~~!@*'`,[click.customId.slice(7,17)], (error, data) => {
+							if (data == undefined) {
+								return message.channel.send("Invalid ID.");
+							}
+							
+							sendembed(data);
+						});*/
+						vote(click.user.id, Number(click.customId.slice(7,17)), click.customId.slice(5,6));
+					})
+					
+					
+				})
 			});
 		}
 		function vote(voter, searchid, votechoice) {
