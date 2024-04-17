@@ -492,7 +492,7 @@ module.exports = {
 							} else {
 								//console.log("6")
 								collector.stop();
-								return i.newmessage.delete();
+								return i.message.delete();
 								
 							}
 						} catch {}
