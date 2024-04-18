@@ -386,21 +386,22 @@ module.exports = {
 			a = select.VOTES_A;
 			b = select.VOTES_B;
 			t = a + b;
+			bar_length = 8;
 			
 			words = `<:a_end4:993299735630852106>`;
 			
-			for (i = 0; i < 12; i++) {
-				if (i < (Math.round((a / t) * 12))) { //A MID
+			for (i = 0; i < bar_length; i++) {
+				if (i < (Math.round((a / t) * bar_length))) { //A MID
 					words += "<:a_mid4:993299736452943882>";
-				} else if (i == (Math.round((a / t) * 12))) { //MID
+				} else if (i == (Math.round((a / t) * bar_length))) { //MID
 					//words += "<a:mid:988990340646207528>";
 					words += "<:mid4:993299739099529287>";
 					words += "<:b_mid4:993299737912545382>";
-				} else if (i > (Math.round((a / t) * 12))) { //B MID
+				} else if (i > (Math.round((a / t) * bar_length))) { //B MID
 					words += "<:b_mid4:993299737912545382>";
 				}
 			}
-			if ((Math.round((a / t) * 12)) == 12) {
+			if ((Math.round((a / t) * bar_length)) == bar_length) {
 				//words += "<a:mid:988990340646207528>";
 				words += "<:mid4:993299739099529287>";
 			}
