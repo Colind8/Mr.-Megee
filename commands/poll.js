@@ -178,7 +178,21 @@ module.exports = {
 				return message.channel.send("ID must be a ten digit number.");
 			}
 			
-			return vote(message.author.id, Number(args[1]), args[2]);
+			db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[message.author.id], (error, results) => {
+				if (error) {
+					throw error;
+				}
+				try {
+					votedpolls = JSON.parse(results.VOTE_ARRAY).data;
+					if (votedpolls.includes(searchid)) {
+						return message.channel.send("You already voted for this poll!");
+					}
+				} catch {}
+				
+				return vote(message.author.id, Number(args[1]), args[2]);
+			});
+			
+			
 			}
 		
 		if (args[0] == "search" || args[0] == "s") { //SEARCH
@@ -425,13 +439,18 @@ module.exports = {
 			}
 			
 			let newdate = new Date(Number(select.DATE));
+			let button_lifespan = (10 * 60 * 1000);
+			let button_expiration = d.getTime() + button_lifespan;
+			
+			words += `\nButtons expire <t:${Math.floor(button_expiration / 1000)}:R>`
 			
 			var pollembed = new MessageEmbed()
 				.setColor("#c6c6c6")
 				.setAuthor({name: "Submitted by " + select.AUTHOR})
 				.setTitle(select.TITLE + "?")
 				.setDescription(words)
-				.setFooter({ text: `${newdate.toUTCString()}`})
+				.setTimestamp(newdate.toISOString())
+				.setFooter({text: (select.ID).toString()})
 				.addFields({
 					name: "a. " + select.OPTION_A,
 					value: aword,
@@ -468,13 +487,37 @@ module.exports = {
 				embeds: [pollembed],
 				components: [row]
 			}).then((newmessage) => {
+				const collectorFilter = i => {
+					db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[i.user.id], (error, results) => {
+						//console.log("2")
+						if (error) {
+							throw error;
+						}
+						//console.log("3")
+						try {
+							votedpolls = JSON.parse(results.VOTE_ARRAY).data;
+							//console.log("4")
+							//console.log(Number(i.customId.slice(7,17)));
+							if (votedpolls.includes(Number(i.customId.slice(7,17)))) {
+								i.reply({content:"You already voted for this poll!",ephemeral: true});
+								return false;
+								
+							} else {
+								console.log("returned true");
+								return true;
+							}
+						} catch {}
+					})
+				};
 				const collector = newmessage.createMessageComponentCollector({
-				
+					time: button_lifespan/*,
+					filter: collectorFilter*/
 				});
 				collector.on('collect', i => {
 					//i.message.delete();
 					//console.log("collected " + i.user.id);
 					//console.log("1")
+
 					
 					db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[i.user.id], (error, results) => {
 						//console.log("2")
@@ -488,6 +531,8 @@ module.exports = {
 							//console.log(Number(i.customId.slice(7,17)));
 							if (votedpolls.includes(Number(i.customId.slice(7,17)))) {
 								//console.log("5")
+								//console.log(collector.total);
+								//collector.handleDispose()
 								return i.reply({content:"You already voted for this poll!",ephemeral: true});
 								
 							} else {
@@ -498,6 +543,8 @@ module.exports = {
 							}
 						} catch {}
 					})
+					//collector.stop();
+					//return i.message.delete();
 				});
 				collector.on('end', collection => {
 					collection.forEach(click => {
@@ -516,17 +563,21 @@ module.exports = {
 					
 					
 				})
+				collector.on('ignore', l => {
+					return i.reply({content:"You already voted for this poll!",ephemeral: true});
+				})
 			});
 		}
 		function vote(voter, searchid, votechoice) {
 			db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
+				
 				if (error) {
 					throw error;
 				}
 				try {
 					votedpolls = JSON.parse(results.VOTE_ARRAY).data;
 					if (votedpolls.includes(searchid)) {
-						return message.channel.send("You already voted for this poll!");
+						return;
 					}
 				} catch {}
 				
