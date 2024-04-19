@@ -1607,6 +1607,13 @@ function upgradebuilder (key, upgrade) {
 }
 
 function bankbuilder (key) {
+	bankmax = 200;
+	if (key.tree.includes(6)) {
+		bankmax = 800;
+	}
+	if (key.tree.includes(7)) {
+		bankmax = 2000;
+	}
 	if (key.minigames.investment > 0) {
 		const idleBank = new MessageEmbed()
 			.setColor(color)
@@ -1620,13 +1627,13 @@ function bankbuilder (key) {
 			const idleBank = new MessageEmbed()
 				.setColor(color)
 				.setTitle(idle.bank.title)
-				.setFooter({text: "Bank Balance: " + key.minigames.bank.toString()})
+				.setFooter({text: `Bank Balance: ${key.minigames.bank.toString()} / ${bankmax}`})
 			return idleBank;
 		} else {
 			const idleBank = new MessageEmbed()
 				.setColor(color)
 				.setTitle(idle.bank.title)
-				.setFooter({text: "Bank Balance: " + key.minigames.bank.toString()})
+				.setFooter({text: `Bank Balance: ${key.minigames.bank.toString()} / ${bankmax}`})
 			return idleBank;
 		}
 	} else {
@@ -1636,7 +1643,7 @@ function bankbuilder (key) {
 				.setTitle(idle.bank.title)
 				.setThumbnail(idle.bank.thumbnail)
 				.setDescription(idle.bank.body + idle.bank.invest)
-				.setFooter({text: "Bank Balance: " + key.minigames.bank.toString()})
+				.setFooter({text: `Bank Balance: ${key.minigames.bank.toString()} / ${bankmax}`})
 			return idleBank;
 		} else {
 			const idleBank = new MessageEmbed()
@@ -1644,7 +1651,7 @@ function bankbuilder (key) {
 				.setTitle(idle.bank.title)
 				.setThumbnail(idle.bank.thumbnail)
 				.setDescription(idle.bank.body)
-				.setFooter({text: "Bank Balance: " + key.minigames.bank.toString()})
+				.setFooter({text: `Bank Balance: ${key.minigames.bank.toString()} / ${bankmax}`})
 			return idleBank;
 		}
 	}
