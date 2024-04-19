@@ -620,7 +620,7 @@ module.exports = {
 						return message.channel.send("You do not have that many coins.");
 					}
 					if ((key.minigames.bank + inamt) > bankmax) {
-						return message.channel.send("Your bank is too small to accept that amount!");
+						inamt = bankmax - key.minigames.bank;
 					}
 					
 					key.minigames.bank = key.minigames.bank + inamt;
