@@ -13,7 +13,7 @@ module.exports = {
 	async execute(message) {
         const args = message.content.slice(prefix.length).trim().split(/ +/);
 	    const command = args.shift().toLowerCase();
-		const d = new Date();
+		
 		//var file = fs.readFileSync('poll.txt').toString();
         //var dataobj = JSON.parse(file);
 		
@@ -127,6 +127,7 @@ module.exports = {
 				while (bruh.includes(newid)) {
 					newid = Math.floor(Math.random() * 8999999999) + 1000000000;
 				}
+				let d = new Date();
 				
 				db.run(`INSERT INTO polls (ID, AUTHOR, AUTHORID, DATE, TITLE, OPTION_A, OPTION_B, VOTES_A, VOTES_B, VOTES_TOTAL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [newid, message.author.username, message.author.id, d, title, a, b, 0, 0, 0], (error) => {
 					if(error) {
@@ -437,7 +438,7 @@ module.exports = {
 				aword = a.toString();
 				bword = b.toString();
 			}
-			
+			let d = new Date();
 			let newdate = new Date(Number(select.DATE));
 			let button_lifespan = (60 * 60 * 1000);
 			let button_expiration = d.getTime() + button_lifespan;
