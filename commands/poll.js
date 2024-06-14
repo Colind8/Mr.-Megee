@@ -439,7 +439,7 @@ module.exports = {
 			}
 			
 			let newdate = new Date(Number(select.DATE));
-			let button_lifespan = (10 * 60 * 1000);
+			let button_lifespan = (60 * 60 * 1000);
 			let button_expiration = d.getTime() + button_lifespan;
 			
 			words += `\nButtons expire <t:${Math.floor(button_expiration / 1000)}:R>`
