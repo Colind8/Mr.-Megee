@@ -190,7 +190,7 @@ module.exports = {
 					}
 				} catch {}
 				
-				return vote(message.author.id, Number(args[1]), args[2]);
+				return vote(message.author.id, Number(args[1]), args[2], "");
 			});
 			
 			
@@ -397,7 +397,10 @@ module.exports = {
 				.setFooter({text:page + "/" + pages})
 			return message.channel.send({embeds: [listembed]});
 		}
-        function sendembed(select) {
+        function sendembed(select, votereel) {
+			if (!votereel) {
+				votereel = null;
+			}
 			a = select.VOTES_A;
 			b = select.VOTES_B;
 			t = a + b;
@@ -485,6 +488,7 @@ module.exports = {
 			
 			
 			return message.channel.send({
+				content: votereel,
 				embeds: [pollembed],
 				components: [row]
 			}).then((newmessage) => {
@@ -559,7 +563,7 @@ module.exports = {
 							
 							sendembed(data);
 						});*/
-						vote(click.user.id, Number(click.customId.slice(7,17)), click.customId.slice(5,6));
+						vote(click.user.id, Number(click.customId.slice(7,17)), click.customId.slice(5,6), votereel);
 					})
 					
 					
@@ -569,7 +573,7 @@ module.exports = {
 				})
 			});
 		}
-		function vote(voter, searchid, votechoice) {
+		function vote(voter, searchid, votechoice, votereel_vote) {
 			db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
 				
 				if (error) {
@@ -594,6 +598,10 @@ module.exports = {
 						return message.channel.send("You must use either \"`a`\" or \"`b`.\"");
 					}
 					
+					if (votereel_vote == null) {
+						votereel_vote = ""
+					}
+					
 					if (votechoice == "a") {
 						data.VOTES_A++;
 						data.VOTES_TOTAL++;
@@ -604,7 +612,8 @@ module.exports = {
 							if (error) {
 								throw error;
 							}
-							sendembed(data);
+							votereel_vote += `${message.client.users.cache.get(voter).displayName} voted for ${data.OPTION_A}\n`;
+							sendembed(data, votereel_vote);
 							db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
 								if(error) {
 									return console.log(error);
@@ -635,8 +644,8 @@ module.exports = {
 							if (error) {
 								throw error;
 							}
-							
-							sendembed(data);
+							votereel_vote += `${message.client.users.cache.get(voter).displayName} voted for ${data.OPTION_B}\n`;
+							sendembed(data, votereel_vote);
 							db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
 								if(error) {
 									return console.log(error);
