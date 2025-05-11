@@ -4,3 +4,4 @@ ffmpeg.exe
 config.json
 *.mp3
 *.ogg
+resources/data.json
