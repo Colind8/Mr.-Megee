@@ -887,7 +887,7 @@ module.exports = {
 				}
 				
 				if (!args[1]) {
-					return message.channel.send("Cheat Commands: give_xp, set_tokens, set_prestige, set_coins, set_xp");
+					return message.channel.send("Cheat Commands: give_xp, set_tokens, set_prestige, set_coins, set_xp, set_perk, perk_list");
 				}
 				
 				if (args[1] == "give_xp") {
@@ -982,6 +982,19 @@ module.exports = {
 				if (args[1] == "set_xp") {
 					key.xp = Number(args[2]);
 				}
+				
+				if (args[1] == "set_perk") {
+					key.randperk = Number(args[2]);
+				}
+				
+				if (args[1] == "perk_list") {
+					let cheat_perklist = "";
+					for (let i = 0; i < idle.perklist.length; i++) {
+						cheat_perklist += `${i}: ${idle.perklist[i].name}\n`;
+					}
+					return message.channel.send(cheat_perklist);
+				}
+				
 				try {
 					db.run(`UPDATE idle SET data = ? WHERE userid = ?`, [JSON.stringify(key), message.author.id]);
 				} catch (error) {
