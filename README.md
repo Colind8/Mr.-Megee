@@ -43,6 +43,7 @@ Mr. Megee is a Discord.js bot that has a primary focus on unique features, troll
 - `npm install @discordjs/voice`
 - `npm install node-fetch@2.6.7`
 - `npm install tweetnacl`
+- `npm install seedrandom`
 4. Create a `megee.db` database. There's no default one yet so you'll have to make it yourself by looking through the code.
 5. Open config.json and add your bot token into the blank "token" value. Also replace the owner ID with your own and the audio file path with your own.
 6. Create an audio folder in that path. The default sounds aren't included in this repository, so you can just drag your own mp3s in and change sounds.json to be what you want.
