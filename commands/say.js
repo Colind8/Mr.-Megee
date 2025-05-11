@@ -17,7 +17,7 @@ module.exports = {
         if (Math.floor(Math.random() * 20) == 0) {
             return message.channel.send(arg + "... eh nah")
         } else {
-            return message.channel.send(say.data[Math.floor(Math.random() * (length - 1))]);
+            return message.channel.send(say.data[Math.floor(Math.random() * (length))]);
         }
 
     },

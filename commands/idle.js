@@ -357,7 +357,7 @@ module.exports = {
 				let invest   = key.minigames.investment;
 				
 				if (key.tree.includes(1)) { // Perkaholic
-					perkaholic = key.perks[Math.floor(Math.random() * (key.perks.length - 1))];
+					perkaholic = key.perks[Math.floor(Math.random() * key.perks.length)];
 				}
 				
 				if (config.idle_debug == 1) {
@@ -808,10 +808,10 @@ module.exports = {
 						slots_winners = ['<:Coin:514985713574346758>','<:badgecoin100:547569176340987925>',':middle_finger:'];
 						slots_desc = "> ";
 						for(i=0; i < 2; i++) {
-							slots_desc += slots_options[Math.floor(Math.random() * (slots_options.length - 1))];
+							slots_desc += slots_options[Math.floor(Math.random() * (slots_options.length))];
 							slots_desc += " | ";
 						}
-						slots_desc += slots_options[Math.floor(Math.random() * (slots_options.length - 1))];
+						slots_desc += slots_options[Math.floor(Math.random() * (slots_options.length))];
 						slots_desc += "\n> ";
 						
 						for (i=0; i < casino_rerolls; i++) {
@@ -820,7 +820,7 @@ module.exports = {
 							} else {
 								slots_winners = [];
 								for(i2 = 0; i2<3; i2++) {
-									slots_winners.push(slots_options[Math.floor(Math.random() * (slots_options.length - 1))]);
+									slots_winners.push(slots_options[Math.floor(Math.random() * (slots_options.length))]);
 								}
 							}
 						}
@@ -832,10 +832,10 @@ module.exports = {
 						slots_desc += slots_winners[slots_winners.length - 1];
 						slots_desc += " <<\n> ";
 						for(i=0; i < 2; i++) {
-							slots_desc += slots_options[Math.floor(Math.random() * (slots_options.length - 1))];
+							slots_desc += slots_options[Math.floor(Math.random() * (slots_options.length))];
 							slots_desc += " | ";
 						}
-						slots_desc += slots_options[Math.floor(Math.random() * (slots_options.length - 1))];
+						slots_desc += slots_options[Math.floor(Math.random() * (slots_options.length))];
 						slots_desc += "\n";
 						slots_reward = do_slots(slots_winners);
 						slots_desc += slots_reward[0];

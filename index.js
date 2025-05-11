@@ -130,7 +130,7 @@ client.on('messageCreate', async message => {
     if (!client.commands.has(command)) {
         let length = unrecognizedCommands.data.length;
 
-        return message.channel.send(unrecognizedCommands.data[Math.floor(Math.random() * (length - 1))])
+        return message.channel.send(unrecognizedCommands.data[Math.floor(Math.random() * length)])
     }
 
     try {

@@ -8,6 +8,6 @@ module.exports = {
 	async execute(message) {
         let length = superSecret.data.length;
         
-		await message.channel.send(superSecret.data[Math.floor(Math.random() * (length - 1))]);
+		await message.channel.send(superSecret.data[Math.floor(Math.random() * length)]);
 	},
 };

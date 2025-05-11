@@ -12,7 +12,7 @@ module.exports = {
 	    const command = args.shift().toLowerCase();
         const arg = message.content.slice(prefix.length + 9).trim();
         let length = img.data.length;
-        let image = img.data[Math.floor(Math.random() * (length - 0))];
+        let image = img.data[Math.floor(Math.random() * length)];
 		
 		
 		if (arg.length > 1500) {
@@ -22,13 +22,6 @@ module.exports = {
         });
 		}
 		
-		/*if(Math.floor(Math.random() * 1) == 0) {
-			return message.channel.send({
-				content: "\"Actually... " + arg + "\"",
-				files: ["https://c.tenor.com/oIEScSBnTtIAAAAd/lego-island.gif"]
-			});
-		}*/
-        
 		return message.channel.send({
             content: "\"Actually... " + arg + "\"",
             files: [image]

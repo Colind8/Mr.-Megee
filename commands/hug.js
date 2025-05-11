@@ -20,11 +20,11 @@ module.exports = {
             if(user == message.author) {
                 let length = hugSelfImages.data.length;
                 
-                return message.channel.send(`${message.author} hugged yourself.\n`+ hugSelfImages.data[Math.floor(Math.random() * (length - 1))])
+                return message.channel.send(`${message.author} hugged yourself.\n`+ hugSelfImages.data[Math.floor(Math.random() * length)])
             }
             let length = hugImages.data.length;
 
-            return message.channel.send(`${message.author} gave ${user} a hug!\n`+ hugImages.data[Math.floor(Math.random() * (length - 1))])
+            return message.channel.send(`${message.author} gave ${user} a hug!\n`+ hugImages.data[Math.floor(Math.random() * length)])
         } else {
             return message.channel.send(`Please specify who you're hugging.`)
         }

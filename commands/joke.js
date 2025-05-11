@@ -12,7 +12,7 @@ module.exports = {
 	    const command = args.shift().toLowerCase();
         let length = joke.data.length;
         
-		return message.channel.send(joke.data[Math.floor(Math.random() * (length - 1))]);
+		return message.channel.send(joke.data[Math.floor(Math.random() * length)]);
 
         
     },

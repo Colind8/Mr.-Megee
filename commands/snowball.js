@@ -21,7 +21,7 @@ module.exports = {
             }
             let length = snowballz.data.length;
 
-            return message.channel.send(`${message.author} threw a snowball at ${user}!\n`+ snowballz.data[Math.floor(Math.random() * (length - 1))])
+            return message.channel.send(`${message.author} threw a snowball at ${user}!\n`+ snowballz.data[Math.floor(Math.random() * length)])
         } else {
             return message.channel.send(`Please specify who you're throwing a snowball at.`)
         }
