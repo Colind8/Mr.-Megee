@@ -57,7 +57,12 @@ module.exports = {
 		}
         
 		if (args[0] == "help" || args[0] == "h") { //HELP
-			return message.channel.send({embeds: [helpembed]});
+			if (args[1] == "list") {
+				return message.channel.send({embeds: [listhelpembed]});
+			} else {
+				return message.channel.send({embeds: [helpembed]});
+			}
+			
 		}
 		
 		if (args[0] == "create" || args[0] == "c") { //CREATE POLL
@@ -212,65 +217,200 @@ module.exports = {
 		}
 
 		if (args[0] == "list" || args[0] == "l") { //LIST [sort] [filter] [page]
-			dbcommand = `SELECT * FROM polls `;
 			
 			db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[message.author.id], (error, results) => {
-				try {
-					switch (args[2]) { //FILTER
-						case "v":
+				rearg = message.content.slice(prefix.length + command.length + args[0].length + 1).trim().split(/\?+/);
+				let searchtypesused = [false,false,false,false,false,false] // filter, sort, title, author, amountper, pageindex
+				meta_array = [0,"",10] // pageindex, list_desc, amountper
+				dbcommand = `SELECT * FROM polls `;
+				list_sort = "";
+				list_desc = "";
+				where_array = [];
+				//console.log(`rearg: ${rearg}`);
+				
+				for (let i = 0; i < rearg.length; i++) {
+					//console.log(`${i}: ${rearg[i]}`);
+					if (rearg[i].indexOf("filter:") != -1) {
+						if (searchtypesused[0]) {
+							return message.channel.send(`Only one filter may be used`)
+						}
+						searchtypesused[0] = true;
+						let filter = rearg[i].trim().slice("filter:".length).trim().split(/\,+/);
+						let whereid_array = [];
+						let whereidnot_array = [];
+						
+						
+						// Use below if more filters are added... otherwise
+						
+						/*for (let j = 0; j < filter.length; j++) {
+							switch (filter[j]) {
+								case "voted":
+									votedpolls = JSON.parse(results.VOTE_ARRAY).data;
+									whereid_array = whereid_array.concat(votepolls);
+									break;
+								case "notvoted":
+									votedpolls = JSON.parse(results.VOTE_ARRAY).data;
+									whereid_array = whereidnot_array.concat(votepolls);
+									break;
+							}
+						}*/
+						
+						// Otherwise, this code is used instead...
+						
+						if (filter[0] == "voted" || filter[0] == "v") {
 							votedpolls = JSON.parse(results.VOTE_ARRAY).data;
-							dbcommand += `WHERE ID IN (` + votedpolls.toString() + `) AND NOT TITLE GLOB '~~!@*' `;
-							break;
-						case "c":
-							createdpolls = JSON.parse(results.CREATE_ARRAY).data;
-							dbcommand += `WHERE ID IN (` + createdpolls.toString() + `) AND NOT TITLE GLOB '~~!@*' `;
-							break;
-						case "b":
+							whereid_array = whereid_array.concat(votedpolls);
+							where_array.push(`ID IN (${whereid_array})`);
+							list_desc += `Filter: voted -- `;
+						} else if (filter[0] == "notvoted" || filter[0] == "nv") {
 							votedpolls = JSON.parse(results.VOTE_ARRAY).data;
-							createdpolls = JSON.parse(results.CREATE_ARRAY).data;
-							bothpolls = createdpolls.concat(votedpolls);
-							dbcommand += `WHERE ID IN (` + bothpolls.toString() + `) AND NOT TITLE GLOB '~~!@*' `;
-							break;
-						case "-v":
-							votedpolls = JSON.parse(results.VOTE_ARRAY).data;
-							dbcommand += `WHERE ID NOT IN (` + votedpolls.toString() + `) AND NOT TITLE GLOB '~~!@*' `;
-							break;
-						case "-c":
-							createdpolls = JSON.parse(results.CREATE_ARRAY).data;
-							dbcommand += `WHERE ID NOT IN (` + createdpolls.toString() + `) AND NOT TITLE GLOB '~~!@*' `;
-							break;
-						case "-b":
-							votedpolls = JSON.parse(results.VOTE_ARRAY).data;
-							createdpolls = JSON.parse(results.CREATE_ARRAY).data;
-							bothpolls = createdpolls.concat(votedpolls);
-							dbcommand += `WHERE ID NOT IN (` + bothpolls.toString() + `) AND NOT TITLE GLOB '~~!@*' `;
-							break;
-						default:
-							dbcommand += `WHERE NOT TITLE GLOB '~~!@*' `
+							whereidnot_array = whereidnot_array.concat(votedpolls);
+							where_array.push(`ID NOT IN (${whereidnot_array})`);
+							list_desc += `Filter: not voted -- `;
+						} else {
+							return message.channel.send(`Filter error!`);
+						}
+						
+						
 					}
-				} catch {
-					return message.channel.send("Error with filter.")
+					
+					if (rearg[i].indexOf("sort:") != -1) {
+						if (searchtypesused[1]) {
+							return message.channel.send(`Only one sort may be used`);
+						}
+						searchtypesused[1] = true;
+						let sort = rearg[i].trim().slice("sort:".length).trim();
+						switch (sort) {
+							case "newest":
+								list_sort = "ORDER BY DATE DESC";
+								list_desc += `Sort: newest -- `;
+								break
+							case "oldest":
+								list_sort = "ORDER BY DATE ASC";
+								list_desc += `Sort: oldest -- `;
+								break;
+							case "mostvotes":
+								list_sort = "ORDER BY VOTES_TOTAL DESC";
+								list_desc += `Sort: most votes -- `;
+								break;
+							case "leastvotes":
+								list_sort = "ORDER BY VOTES_TOTAL ASC";
+								list_desc += `Sort: least votes -- `;
+								break;
+							case "n":
+								list_sort = "ORDER BY DATE DESC";
+								list_desc += `Sort: newest -- `;
+								break
+							case "o":
+								list_sort = "ORDER BY DATE ASC";
+								list_desc += `Sort: oldest -- `;
+								break;
+							case "m":
+								list_sort = "ORDER BY VOTES_TOTAL DESC";
+								list_desc += `Sort: most votes -- `;
+								break;
+							case "l":
+								list_sort = "ORDER BY VOTES_TOTAL ASC";
+								list_desc += `Sort: least votes -- `;
+								break;
+							default:
+								return message.channel.send(`Sorting option not valid!`);
+						}
+					}
+					
+					if (rearg[i].indexOf("title:") != -1) {
+						if (searchtypesused[2]) {
+							return message.channel.send(`Only one title filter may be used`)
+						}
+						searchtypesused[2] = true;
+						let title_filter = rearg[i].trim().slice("title:".length).trim();
+						if (title_filter.length > 0) {
+							where_array.push(`TITLE LIKE '%${title_filter}%'`);
+							list_desc += `Title Search: "${title_filter}" -- `;
+						} else {
+							return message.channel.send(`title not valid!`);
+						}
+					}
+					
+					if (rearg[i].indexOf("author:") != -1) {
+						if (searchtypesused[3]) {
+							return message.channel.send(`Only one author filter may be used`)
+						}
+						searchtypesused[3] = true;
+						let author_filter = rearg[i].trim().slice("author:".length).trim();
+						if (author_filter.length > 0) {
+							where_array.push(`AUTHOR LIKE '%${author_filter}%'`);
+							list_desc += `Author Search: "${author_filter}" -- `;
+						} else {
+							return message.channel.send(`author not valid!`);
+						}
+					}
+					
+					if (rearg[i].indexOf("amount:") != -1) {
+						if (searchtypesused[4]) {
+							return message.channel.send(`Only one amount filter may be used`)
+						}
+						searchtypesused[4] = true;
+						let amount_filter = rearg[i].trim().slice("author:".length).trim();
+						amount_filter = Number(amount_filter);
+						
+						if (isNaN(amount_filter)) {
+							amount_filter = 10;
+						}
+						if (amount_filter < 1) {
+							amount_filter = 1;
+						}
+						
+						if (amount_filter > 15) {
+							amount_filter = 15;
+						}
+						
+						meta_array[2] = amount_filter
+					}
+					
+					if (rearg[i].indexOf("page:") != -1) {
+						if (searchtypesused[4]) {
+							return message.channel.send(`Only one page filter may be used`)
+						}
+						searchtypesused[4] = true;
+						let page_filter = rearg[i].trim().slice("page:".length).trim();
+						page_filter = Number(page_filter);
+						
+						if (isNaN(page_filter)) {
+							page_filter = 0;
+						}
+						page_filter--;
+						if (page_filter < 0) {
+							page_filter = 0;
+						}
+						
+						meta_array[0] = page_filter;
+					}
 				}
-				switch (args[1]) { //SORT
-					case "n":
-						dbcommand += `ORDER BY DATE DESC `;
-						break;
-					case "o":
-						dbcommand += `ORDER BY DATE ASC `;
-						break;
-					case "mv":
-						dbcommand += `ORDER BY VOTES_TOTAL DESC `;
-						break;
-					case "lv":
-						dbcommand += `ORDER BY VOTES_TOTAL ASC `;
-						break;
-					default:
-						dbcommand += `ORDER BY DATE DESC `;
-						break;
+				where_array.push(`NOT TITLE GLOB '~~!@*'`)
+				
+				if (where_array.length > 0) {
+					dbcommand += `WHERE `
+					for (let i = 0; i < where_array.length; i++) {
+						if (i == where_array.length - 1) {
+							dbcommand += `${where_array[i]} `
+						} else {
+							dbcommand += `${where_array[i]} AND `
+						}
+					}
 				}
 				
+				if (list_sort.length == 0) {
+					list_sort = "ORDER BY DATE DESC";
+				}
+				
+				dbcommand += `${list_sort}`;
+				list_desc = list_desc.slice(0,list_desc.length - 4);
+				meta_array[1] = list_desc;
+				
+				
 				db.all(dbcommand, (error,data) => {
-					sendlistembed(data);
+					sendlistembed(data,meta_array);
 				});
 			});
 			
@@ -299,104 +439,181 @@ module.exports = {
 			});
 		}
 		
-		function sendlistembed(select) {
-			//console.log(select);
-			descriptionbuilder = `Sort: `;
-			switch (args[1]) {
-				case "n":
-					descriptionbuilder += `**[n]** [o] [lv] [mv]`;
-					break;
-				case "o":
-					descriptionbuilder += `[n] **[o]** [lv] [mv]`
-					break;
-				case "lv":
-					descriptionbuilder += `[n] [o] **[lv]** [mv]`
-					break;
-				case "mv":
-					descriptionbuilder += `[n] [o] [lv] **[mv]**`
-					break;
-				default:
-					descriptionbuilder += `**[n]** [o] [lv] [mv]`;
-					break;
+		function sendlistembed(select,extra_meta,message_id) {
+			page_index = extra_meta[0];
+			list_desc = extra_meta[1];
+			
+			descriptionbuilder = `${list_desc}`;
+			
+			listfieldbuilder = ``;
+			
+			row = new MessageActionRow()
+				.addComponents(
+					new MessageButton()
+						.setStyle('SECONDARY')
+						.setCustomId(`first_page`)
+						.setEmoji(`⏮`)
+				)
+				.addComponents(
+					new MessageButton()
+						.setStyle('SECONDARY')
+						.setCustomId(`previous_page`)
+						.setEmoji(`⏪`)
+				)
+				.addComponents(
+					new MessageButton()
+						.setLabel(`page`)
+						.setStyle('PRIMARY')
+						.setCustomId(`page_number`)
+				)
+				.addComponents(
+					new MessageButton()
+						.setStyle('SECONDARY')
+						.setCustomId(`next_page`)
+						.setEmoji(`⏩`)
+				)
+				.addComponents(
+					new MessageButton()
+						.setStyle('SECONDARY')
+						.setCustomId(`last_page`)
+						.setEmoji(`⏭`)
+				)
+			if (page_index == 0) {
+				row.components[0].setDisabled(true);
+				row.components[1].setDisabled(true);
 			}
 			
-			descriptionbuilder += ` -- Filter: `;
-			switch (args[2]) {
-				case "v":
-					descriptionbuilder += `[-] [b] [c] **[v]** [n]`;
-					break;
-				case "c":
-					descriptionbuilder += `[-] [b] **[c]** [v] [n]`;
-					break;
-				case "b":
-					descriptionbuilder += `[-] **[b]** [c] [v] [n]`;
-					break;
-				case "-v":
-					descriptionbuilder += `**[-]** [b] [c] **[v]** [n]`;
-					break;
-				case "-c":
-					descriptionbuilder += `**[-]** [b] **[c]** [v] [n]`;
-					break;
-				case "-b":
-					descriptionbuilder += `**[-]** **[b]** [c] [v] [n]`;
-					break;
-				default:
-					descriptionbuilder += `[-] [b] [c] [v] **[n]**`;
-					break;
+			amount_per_page = extra_meta[2];
+			pages = Math.ceil(select.length / amount_per_page);
+			if (page_index > pages - 1) {
+				page_index = pages - 1
 			}
 			
+			row.components[2].setLabel(`${page_index + 1}/${pages}`)
 			
-			
-			if((!args[3]) || !(Number(args[3]))) {
-				page = 1;
-			} else {
-				page = (args[3]);
+			if ((page_index + 1) == pages) {
+				row.components[3].setDisabled(true);
+				row.components[4].setDisabled(true);
 			}
 			
-			idfieldbuilder = ``;
-			titlefieldbuilder = ``;
-			
-			if (page < 1) {
-				return message.channel.send("Page number must be at least 1.");
-			}
-			
-			pages = Math.ceil(select.length / 8);
-			
-			if (page > pages) {
-				idfieldbuilder = `0 results`;
-				titlefieldbuilder = `0 results`;
-			} else {
-				for (i = (page * 8) - 9; i < (page * 8) + 8; i++) {
-					
-					try {
-						let temptitle = select[i].TITLE;
-						if (temptitle.length > 50) {
-							temptitle = temptitle.slice(0,50);
-							temptitle = temptitle.trim();
-							temptitle += "...";
-						}
-						idfieldbuilder += '`' + select[i].ID + '`\n';
-						titlefieldbuilder += '`' + temptitle + '?`\n';
-					} catch{}
+			for (let i = (page_index * amount_per_page); i < (page_index * amount_per_page) + amount_per_page; i++) {
+				if (select[i]) {
+					let temptitle = select[i].TITLE;
+					if (temptitle.length > 50) {
+						temptitle = temptitle.slice(0,50);
+						temptitle = temptitle.trim();
+						temptitle += "...";
+					}
+					listfieldbuilder += `- [**\`${select[i].ID}\`**] ${temptitle}?\n`;
 				}
 			}
+			if (select.length == 0) {
+				listfieldbuilder += `No results found!`
+			}
+			
+			let d = new Date();
+			let button_lifespan = (1 * 60 * 1000);
+			let button_expiration = d.getTime() + button_lifespan;
+			
+			descriptionbuilder += `\n-# Buttons expire <t:${Math.floor(button_expiration / 1000)}:R>`
 			
 			var listembed = new MessageEmbed()
 				.setColor("#c6c6c6")
 				.setTitle(select.length + " results")
 				.setDescription(descriptionbuilder)
 				.addFields({
-					name: "ID",
-					value: idfieldbuilder,
-					inline: true
-				},{
-					name: "Poll",
-					value: titlefieldbuilder,
+					name: "Poll List",
+					value: listfieldbuilder,
 					inline: true
 				})
-				.setFooter({text:page + "/" + pages})
-			return message.channel.send({embeds: [listembed]});
-		}
+				//.setFooter({text:(page_index + 1) + "/" + pages})
+			
+			if (message_id) {
+				return message_id.edit({embeds: [listembed],components: [row]}).then((newmessage) => {
+					const collector = newmessage.createMessageComponentCollector({
+						time: button_lifespan,
+						maxProcessed: 1
+					});
+					
+					collector.on('collect', i => {
+						//i.message.delete();
+						//console.log("collected " + i);
+						//console.log("collected " + i.user.id);
+						i.deferUpdate();
+						collector.stop();
+					});
+					
+					collector.on('end', collection => {
+						collection.forEach(click => {
+							//console.log(click.user.id, click.customId);
+							switch (click.customId) {
+								case "first_page":
+									sendlistembed(select,[0,list_desc,amount_per_page],newmessage);
+									break;
+								case "next_page":
+									sendlistembed(select,[page_index + 1,list_desc,amount_per_page],newmessage);
+									break;
+								case "previous_page":
+									sendlistembed(select,[page_index - 1,list_desc,amount_per_page],newmessage);
+									break;
+								case "last_page":
+									sendlistembed(select,[pages - 1,list_desc,amount_per_page],newmessage);
+									break;
+								case "page_number":
+									sendlistembed(select,[page_index,list_desc,amount_per_page],newmessage);
+									break;
+							}
+							
+						})
+						
+						
+					})
+				});
+			} else {
+				return message.channel.send({embeds: [listembed],components: [row]}).then((newmessage) => {
+					const collector = newmessage.createMessageComponentCollector({
+						time: button_lifespan,
+						maxProcessed: 1
+					});
+					
+					collector.on('collect', i => {
+						//i.message.delete();
+						//console.log("collected " + i);
+						//console.log("collected " + i.user.id);
+						i.deferUpdate();
+						collector.stop();
+					});
+					
+					collector.on('end', collection => {
+						collection.forEach(click => {
+							//console.log(click.user.id, click.customId);
+							switch (click.customId) {
+								case "first_page":
+									sendlistembed(select,[0,list_desc,amount_per_page],newmessage);
+									break;
+								case "next_page":
+									sendlistembed(select,[page_index + 1,list_desc,amount_per_page],newmessage);
+									break;
+								case "previous_page":
+									sendlistembed(select,[page_index - 1,list_desc,amount_per_page],newmessage);
+									break;
+								case "last_page":
+									sendlistembed(select,[pages - 1,list_desc,amount_per_page],newmessage);
+									break;
+								case "page_number":
+									sendlistembed(select,[page_index,list_desc,amount_per_page],newmessage);
+									break;
+							}
+							
+						})
+						
+						
+					})
+				});
+			
+			}
+			
+			}
         function sendembed(select, votereel) {
 			if (!votereel) {
 				votereel = null;
@@ -695,10 +912,33 @@ const helpembed = new MessageEmbed()
 		name: "`xd)poll search <id>`",
 		value: "Returns the poll and its current results by ID.\n`<id>` is the ID of the poll. You'll need to already know it before using this command."
 	},{
-		name: "`xd)poll list [sort] [filter] [page]`",
-		value: "Returns a list of polls.\n\n`[sort]` is how you want the list sorted. Can be `n` for newest, `o` for oldest, `mv` for most voted, or `lv` for least voted.\n`[filter]` filters the list to what you want. Can be `v` for polls you've voted on, `c` for polls you've created, `b` for both filters combined, or `n` for no filter. Adding a `-` in front of the filter will exclude the filtered results rather than only showing the filtered results. example: `xd]poll list mv -b` will show a list of polls sorted by most voted and will exclude any polls you've created or voted on.\n`[page]` is what page of the list you want to show."
+		name: "`xd)poll list [search string]`",
+		value: "Returns a list of polls.\n\nUse `xd)poll help list` to learn more."
 	},{
 		name: "`xd)poll rand`",
 		value: "Get a true random poll. It can include a poll you've already voted for."
 	})
 
+const listhelpembed = new MessageEmbed()
+	.setColor("#c6c6c6")
+	.setTitle("Poll List Help")
+	.setDescription("# `xd)poll list [search string]`\nYou can filter and sort the poll list very easily. The search string is a `?` separated list of search options created with the format `option:criteria`. Below are a list of options you can use.\n### Examples:\n-# - `xd)poll list sort:mostvotes` - sort list from most voted\n-# - `xd)poll list title:Mr. Megee? sort:leastvotes` - only shows polls with \"Mr. Megee\" in the title and sorts by least voted.\n-# - `xd)poll list amount:15? filter:notvoted? author:colind8? sort:oldest` - Sets the amount of polls per page to 15, only shows polls you haven't voted on, only shows polls by colind8, and sorts the list from oldest.\n### Search Options")
+	.addFields({
+		name: "`filter:voted` or `filter:notvoted`",
+		value: "Filters the search results to return only polls you've voted for (filter:voted) or haven't voted for (filter:voted)"
+	},{
+		name: "`sort:criteria`",
+		value: "Sorts the list based on the following usable criteria: `newest`, `oldest`, `mostvotes`, and `leastvotes`. Example: `sort:mostvotes`"
+	},{
+		name: "`title:criteria`",
+		value: "Filters the search results to return only polls with titles matching your criteria. Example: `title:would you rather`"
+	},{
+		name: "`author:criteria`",
+		value: "Filters the search results to return only polls by an author matching your criteria. Example: `author:Mr. Megee`"
+	},{
+		name: "`amount:number`",
+		value: "The amount of polls listed per page. Can be any number 1 - 15. Example: `amount:14`"
+	},{
+		name: "`page:number`",
+		value: "Will go to a specific page. Example: `page:3`"
+	})
