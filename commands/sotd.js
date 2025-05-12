@@ -19,7 +19,7 @@ module.exports = {
 		// Build seed
 		const d = new Date();
 		var seed = "";
-		seed += d.getMonth() + "/";
+		seed += (d.getMonth() + 1) + "/";
 		seed += d.getDate() + "/";
 		seed += d.getFullYear();
 		
