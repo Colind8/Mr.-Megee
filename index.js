@@ -75,7 +75,7 @@ client.on('messageCreate', async message => {
     
     if (!message.content.startsWith(prefix)) { // Sentient phrases
 		
-		if (message.channel.id == 1002331481898758328) {
+		if (message.channel.id == 471043279551463435) {
 			let wohobj = require('./resources/woh.json');
 			let woh_userexists = false;
 			if (wohobj.data.active == false) {
