@@ -74,6 +74,97 @@ client.on('messageCreate', async message => {
 	
     
     if (!message.content.startsWith(prefix)) { // Sentient phrases
+		
+		if (message.channel.id == 1002331481898758328) {
+			let wohobj = require('./resources/woh.json');
+			let woh_userexists = false;
+			if (wohobj.data.active == false) {
+				console.log("woh inactive");
+				return;
+			}
+			
+			for (let _iwoh = 0; _iwoh < wohobj.user_data.length; _iwoh++) {
+				if (wohobj.user_data[_iwoh].id == message.author.id) {
+					woh_userexists = true;
+					if (message.content == "woh") {
+						wohobj.data.streak++;
+						wohobj.data.total++;
+						wohobj.user_data[_iwoh].score++;
+						console.log(`---\nwoh spoken\nstreak: ${wohobj.data.streak}\ntotal: ${wohobj.data.total}\n`);
+					} else {
+						wohobj.data.streak = 0;
+						console.log(`---\nwoh streak ruined\nstreak: ${wohobj.data.streak}\ntotal: ${wohobj.data.total}\n`);
+						message.channel.send("woh streak ruined!!!");
+					}
+					break;
+				}
+			}
+			
+			if (!woh_userexists) {
+				wohobj.user_data.push({
+					id: message.author.id,
+					name: message.author.username,
+					score: 0
+				});
+				console.log(`---\nnew woher\nwoh name: ${wohobj.user_data[wohobj.user_data.length - 1].name}\n`);
+				
+				if (message.content == "woh") {
+					wohobj.data.streak++;
+					wohobj.data.total++;
+					wohobj.user_data[wohobj.user_data.length - 1].score++;
+					console.log(`---\nwoh spoken\nstreak: ${wohobj.data.streak}\ntotal: ${wohobj.data.total}\n`);
+				} else {
+					wohobj.data.streak = 0;
+					message.channel.send("woh streak ruined!!!");
+				}
+			}
+			
+			fs.writeFileSync("./resources/woh.json", JSON.stringify(wohobj));
+			
+			switch (wohobj.data.streak) {
+				case 5:
+					message.channel.send("5 woh streak");
+					break;
+				case 10:
+					message.channel.send("10 woh streak");
+					break;
+				case 50:
+					message.channel.send("50 woh streak");
+					break;
+				case 100:
+					message.channel.send("100 woh streak!");
+					break;
+				case 200:
+					message.channel.send("200 woh streak!");
+					break;
+				case 500:
+					message.channel.send("500 woh streak!!");
+					break;
+				case 750:
+					message.channel.send("750 woh streak!!");
+					break;
+				case 1000:
+					message.channel.send("1000 woh streak!!!");
+					break;
+				case 1500:
+					message.channel.send("1500 woh streak!!!");
+					break;
+				case 2000:
+					message.channel.send("2000 woh streak!!!!");
+					break;
+				case 3000:
+					message.channel.send("3000 woh streak!!!!");
+					break;
+				case 4000:
+					message.channel.send("4000 woh streak!!!!");
+					break;
+				case 5000:
+					message.channel.send("**5000 woh streak!!!!!**");
+					break;
+			}
+			
+		}
+	
 		if((Math.floor(Math.random() * 25000) == 1) && message.content.length > 0) { //1 in 25000 chance to say a "phrase"
 			phrase = phrases.data[Math.floor(Math.random() * (phrases.data.length))];
 			//console.log(phrase);
