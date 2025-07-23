@@ -78,6 +78,7 @@ client.on('messageCreate', async message => {
 		if (message.channel.id == 471043279551463435) {
 			let wohobj = require('./resources/woh.json');
 			let woh_userexists = false;
+			let resurfaced_content = message.content.toUpperCase();
 			if (wohobj.data.active == false) {
 				console.log("woh inactive");
 				return;
@@ -86,7 +87,7 @@ client.on('messageCreate', async message => {
 			for (let _iwoh = 0; _iwoh < wohobj.user_data.length; _iwoh++) {
 				if (wohobj.user_data[_iwoh].id == message.author.id) {
 					woh_userexists = true;
-					if (message.content == "woh") {
+					if (resurfaced_content.includes("WOH")) {
 						wohobj.data.streak++;
 						wohobj.data.total++;
 						wohobj.user_data[_iwoh].score++;
@@ -108,7 +109,7 @@ client.on('messageCreate', async message => {
 				});
 				console.log(`---\nnew woher\nwoh name: ${wohobj.user_data[wohobj.user_data.length - 1].name}\n`);
 				
-				if (message.content == "woh") {
+				if (resurfaced_content.includes("WOH")) {
 					wohobj.data.streak++;
 					wohobj.data.total++;
 					wohobj.user_data[wohobj.user_data.length - 1].score++;
