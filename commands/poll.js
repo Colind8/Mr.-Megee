@@ -134,7 +134,7 @@ module.exports = {
 				}
 				let d = new Date();
 				
-				db.run(`INSERT INTO polls (ID, AUTHOR, AUTHORID, DATE, TITLE, OPTION_A, OPTION_B, VOTES_A, VOTES_B, VOTES_TOTAL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [newid, message.author.username, message.author.id, d, title, a, b, 0, 0, 0], (error) => {
+				db.run(`INSERT INTO polls (ID, AUTHOR, AUTHORID, DATE, TITLE, OPTION_A, OPTION_B, VOTES_A, VOTES_B, VOTES_C) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [newid, message.author.username, message.author.id, d, title, a, b, `{"data":[]}`, `{"data":[]}`, `{"data":[]}`], (error) => {
 					if(error) {
 						return console.log(error);
 					}
@@ -151,7 +151,7 @@ module.exports = {
 							
 							db.run(`UPDATE polls_users SET CREATE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(createarray), message.author.id]);
 						} else {
-							db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [message.author.id, `{"data":[]}"]);`, `{"data":[]}`], (error) => {
+							db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [message.author.id, `{"data":[]}`, `{"data":[]}`], (error) => {
 								createarray = JSON.parse(`{"data":[]}`);
 								
 								createarray.data.push(newid);
@@ -170,8 +170,9 @@ module.exports = {
 					"TITLE": title,
 					"OPTION_A": a,
 					"OPTION_B": b,
-					"VOTES_A": 0,
-					"VOTES_B": 0
+					"VOTES_A": `{"data":[]}`,
+					"VOTES_B": `{"data":[]}`,
+					"VOTES_C": `{"data":[]}`
 				};
 				
 				sendembed(newpoll);
@@ -184,7 +185,9 @@ module.exports = {
 				return message.channel.send("ID must be a ten digit number.");
 			}
 			
-			db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[message.author.id], (error, results) => {
+			return vote(message.author.id, Number(args[1]), args[2], "");
+			
+			/*db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[message.author.id], (error, results) => {
 				if (error) {
 					throw error;
 				}
@@ -195,8 +198,8 @@ module.exports = {
 					}
 				} catch {}
 				
-				return vote(message.author.id, Number(args[1]), args[2], "");
-			});
+				
+			});*/
 			
 			
 			}
@@ -618,8 +621,14 @@ module.exports = {
 			if (!votereel) {
 				votereel = null;
 			}
-			a = select.VOTES_A;
-			b = select.VOTES_B;
+			
+			a_votesobj = JSON.parse(select.VOTES_A).data;
+			b_votesobj = JSON.parse(select.VOTES_B).data;
+			c_votesobj = JSON.parse(select.VOTES_C).data;
+			
+			a = a_votesobj.length;
+			b = b_votesobj.length;
+			c = c_votesobj.length;
 			t = a + b;
 			bar_length = 8;
 			
@@ -663,7 +672,7 @@ module.exports = {
 			let button_lifespan = (60 * 60 * 1000);
 			let button_expiration = d.getTime() + button_lifespan;
 			
-			words += `\nButtons expire <t:${Math.floor(button_expiration / 1000)}:R>`
+			words += `\nButtons expire <t:${Math.floor(button_expiration / 1000)}:R>\n-# *${c} abstained*.`
 			
 			var pollembed = new MessageEmbed()
 				.setColor("#c6c6c6")
@@ -701,6 +710,12 @@ module.exports = {
 						.setLabel('Vote B')
 						.setStyle('SUCCESS')
 				)
+				.addComponents(
+					new MessageButton()
+						.setCustomId(`vote_c-${select.ID}`)
+						.setLabel('Abstain')
+						.setStyle('SECONDARY')
+				)
 				
 			
 			
@@ -709,62 +724,36 @@ module.exports = {
 				embeds: [pollembed],
 				components: [row]
 			}).then((newmessage) => {
-				const collectorFilter = i => {
-					db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[i.user.id], (error, results) => {
-						//console.log("2")
-						if (error) {
-							throw error;
-						}
-						//console.log("3")
-						try {
-							votedpolls = JSON.parse(results.VOTE_ARRAY).data;
-							//console.log("4")
-							//console.log(Number(i.customId.slice(7,17)));
-							if (votedpolls.includes(Number(i.customId.slice(7,17)))) {
-								i.reply({content:"You already voted for this poll!",ephemeral: true});
-								return false;
-								
-							} else {
-								console.log("returned true");
-								return true;
-							}
-						} catch {}
-					})
-				};
+				function collectorFilter (i) {
+					if ((i.customId.slice(5,6) == "a") && (a_votesobj.includes(i.user.id))) {
+						i.reply({content:"You already voted for this option!",ephemeral: true});
+						return false;
+					}
+					
+					if ((i.customId.slice(5,6) == "b") && (b_votesobj.includes(i.user.id))) {
+						i.reply({content:"You already voted for this option!",ephemeral: true});
+						return false;
+					}
+					
+					if ((i.customId.slice(5,6) == "c") && (c_votesobj.includes(i.user.id))) {
+						i.reply({content:"You already abstained!",ephemeral: true});
+						return false;
+					}
+					return true;
+				}
 				const collector = newmessage.createMessageComponentCollector({
-					time: button_lifespan/*,
-					filter: collectorFilter*/
+					filter: collectorFilter,
+					time: button_lifespan,
+					max: 1
 				});
 				collector.on('collect', i => {
 					//i.message.delete();
 					//console.log("collected " + i.user.id);
 					//console.log("1")
-
 					
-					db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[i.user.id], (error, results) => {
-						//console.log("2")
-						if (error) {
-							throw error;
-						}
-						//console.log("3")
-						try {
-							votedpolls = JSON.parse(results.VOTE_ARRAY).data;
-							//console.log("4")
-							//console.log(Number(i.customId.slice(7,17)));
-							if (votedpolls.includes(Number(i.customId.slice(7,17)))) {
-								//console.log("5")
-								//console.log(collector.total);
-								//collector.handleDispose()
-								return i.reply({content:"You already voted for this poll!",ephemeral: true});
-								
-							} else {
-								//console.log("6")
-								collector.stop();
-								return i.message.delete();
-								
-							}
-						} catch {}
-					})
+					collector.stop();
+					return i.message.delete();
+					
 					//collector.stop();
 					//return i.message.delete();
 				});
@@ -792,6 +781,9 @@ module.exports = {
 		}
 		function vote(voter, searchid, votechoice, votereel_vote) {
 			db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
+				let changing_vote = false;
+				
+				//return console.log(voter);
 				
 				if (error) {
 					throw error;
@@ -799,7 +791,7 @@ module.exports = {
 				try {
 					votedpolls = JSON.parse(results.VOTE_ARRAY).data;
 					if (votedpolls.includes(searchid)) {
-						return;
+						changing_vote = true;
 					}
 				} catch {}
 				
@@ -811,79 +803,213 @@ module.exports = {
 						return message.channel.send("Invalid ID.");
 					}
 					
-					if (!(votechoice == "a" || votechoice ==  "b")) {
-						return message.channel.send("You must use either \"`a`\" or \"`b`.\"");
+					if (!(votechoice == "a" || votechoice ==  "b" || votechoice ==  "c")) {
+						return message.channel.send("You must use either \"`a`\" or \"`b`.\" Or you can use \"`c`\" to abstain.");
 					}
 					
 					if (votereel_vote == null) {
 						votereel_vote = ""
 					}
 					
+					parsed_votes_a = JSON.parse(data.VOTES_A);
+					parsed_votes_b = JSON.parse(data.VOTES_B);
+					parsed_votes_c = JSON.parse(data.VOTES_C);
+					pos_a = parsed_votes_a.data.indexOf(voter);
+					pos_b = parsed_votes_b.data.indexOf(voter);
+					pos_c = parsed_votes_c.data.indexOf(voter);
+					
 					if (votechoice == "a") {
-						data.VOTES_A++;
-						data.VOTES_TOTAL++;
-						//console.log("Arived here");
+						console.log("Arived here");
+						if (parsed_votes_a.data.includes(voter) == true) {
+							return message.reply({content:"You already voted for this option!",ephemeral: true})
+						}
+						if (changing_vote) {
+							if (pos_b != -1) {
+								parsed_votes_b.data.splice(pos_b,1);
+								data.VOTES_B = JSON.stringify(parsed_votes_b);
+								db.run(`UPDATE polls SET VOTES_B = ? WHERE ID = ?`,[data.VOTES_B,searchid],(error) => {
+									if (error) {
+										throw error;
+									}
+									
+								});
+							}
+							if (pos_c != -1) {
+								parsed_votes_c.data.splice(pos_c,1);
+								data.VOTES_C = JSON.stringify(parsed_votes_c);
+								db.run(`UPDATE polls SET VOTES_C = ? WHERE ID = ?`,[data.VOTES_C,searchid],(error) => {
+									if (error) {
+										throw error;
+									}
+									
+								});
+							}
+						}
+						
+						parsed_votes_a.data.push(voter)
+						data.VOTES_A = JSON.stringify(parsed_votes_a);
+						
 						db.run("PRAGMA busy_timeout = 30000");
-						db.run(`UPDATE polls SET VOTES_A = ?, VOTES_TOTAL = ? WHERE ID = ?`,[data.VOTES_A,data.VOTES_TOTAL,searchid],(error) => {
-							//console.log("And here");
+						db.run(`UPDATE polls SET VOTES_A = ? WHERE ID = ?`,[data.VOTES_A,searchid],(error) => {
+							console.log("And here");
 							if (error) {
 								throw error;
 							}
 							votereel_vote += `${message.client.users.cache.get(voter).displayName} voted for ${data.OPTION_A}\n`;
 							sendembed(data, votereel_vote);
-							db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
-								if(error) {
-									return console.log(error);
-								}
-								
-								if(results != undefined) {
-									votearray = JSON.parse(results.VOTE_ARRAY);
+							if (!changing_vote) {
+								db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
+									if(error) {
+										return console.log(error);
+									}
 									
-									votearray.data.push(searchid);
-									
-									db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
-								} else {
-									db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [voter, `{"data":[]}`, `{"data":[]}`], (error) => {
-										votearray = JSON.parse(`{"data":[]}`);
+									if(results != undefined) {
+										votearray = JSON.parse(results.VOTE_ARRAY);
 										
 										votearray.data.push(searchid);
-									
+										
 										db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
-									});
-								}
-							});
+									} else {
+										db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [voter, `{"data":[]}`, `{"data":[]}`], (error) => {
+											votearray = JSON.parse(`{"data":[]}`);
+											
+											votearray.data.push(searchid);
+										
+											db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
+										});
+									}
+								});
+							} else {
+								return;
+							}
 						});
 					} else if (votechoice == "b") {
-						data.VOTES_B++;
-						data.VOTES_TOTAL++;
+						if (parsed_votes_b.data.includes(voter) == true) {
+							return message.reply({content:"You already voted for this option!",ephemeral: true})
+						}
+						if (changing_vote) {
+							if (pos_a != -1) {
+								console.log(`Splicing ${parsed_votes_a.data} at position ${pos_a}`);
+								parsed_votes_a.data.splice(pos_a,1);
+								console.log(parsed_votes_a)
+								data.VOTES_A = JSON.stringify(parsed_votes_a);
+								db.run(`UPDATE polls SET VOTES_A = ? WHERE ID = ?`,[data.VOTES_A,searchid],(error) => {
+									if (error) {
+										throw error;
+									}
+									
+								});
+							}
+							if (pos_c != -1) {
+								parsed_votes_c.data.splice(pos_c,1);
+								data.VOTES_C = JSON.stringify(parsed_votes_c);
+								db.run(`UPDATE polls SET VOTES_C = ? WHERE ID = ?`,[data.VOTES_C,searchid],(error) => {
+									if (error) {
+										throw error;
+									}
+									
+								});
+							}
+						}
+						
+						parsed_votes_b.data.push(voter)
+						data.VOTES_B = JSON.stringify(parsed_votes_b);
+						
 						db.run("PRAGMA busy_timeout = 30000");
-						db.run(`UPDATE polls SET VOTES_B = ?, VOTES_TOTAL = ? WHERE ID = ?`,[data.VOTES_B,data.VOTES_TOTAL,searchid],(error) => {
+						db.run(`UPDATE polls SET VOTES_B = ? WHERE ID = ?`,[data.VOTES_B,searchid],(error) => {
 							if (error) {
 								throw error;
 							}
 							votereel_vote += `${message.client.users.cache.get(voter).displayName} voted for ${data.OPTION_B}\n`;
 							sendembed(data, votereel_vote);
-							db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
-								if(error) {
-									return console.log(error);
-								}
-								
-								if(results != undefined) {
-									votearray = JSON.parse(results.VOTE_ARRAY);
+							if (!changing_vote) {
+								db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
+									if(error) {
+										return console.log(error);
+									}
 									
-									votearray.data.push(searchid);
-									
-									db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
-								} else {
-									db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [voter, `{"data":[]}`, `{"data":[]}`], (error) => {
-										votearray = JSON.parse(`{"data":[]}`);
+									if(results != undefined) {
+										votearray = JSON.parse(results.VOTE_ARRAY);
 										
 										votearray.data.push(searchid);
-									
+										
 										db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
-									});
-								}
-							});
+									} else {
+										db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [voter, `{"data":[]}`, `{"data":[]}`], (error) => {
+											votearray = JSON.parse(`{"data":[]}`);
+											
+											votearray.data.push(searchid);
+										
+											db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
+										});
+									}
+								});
+							} else {
+								return;
+							}
+						});
+					} else if (votechoice == "c") {
+						if (parsed_votes_c.data.includes(voter) == true) {
+							return message.reply({content:"You've already abstained!",ephemeral: true})
+						}
+						if (changing_vote) {
+							if (pos_a != -1) {
+								parsed_votes_a.data.splice(pos_a,1);
+								data.VOTES_A = JSON.stringify(parsed_votes_a);
+								db.run(`UPDATE polls SET VOTES_A = ? WHERE ID = ?`,[data.VOTES_A,searchid],(error) => {
+									if (error) {
+										throw error;
+									}
+									
+								});
+							}
+							if (pos_b != -1) {
+								parsed_votes_b.data.splice(pos_b,1);
+								data.VOTES_B = JSON.stringify(parsed_votes_b);
+								db.run(`UPDATE polls SET VOTES_B = ? WHERE ID = ?`,[data.VOTES_B,searchid],(error) => {
+									if (error) {
+										throw error;
+									}
+									
+								});
+							}
+						}
+						
+						parsed_votes_c.data.push(voter)
+						data.VOTES_C = JSON.stringify(parsed_votes_c);
+						
+						db.run("PRAGMA busy_timeout = 30000");
+						db.run(`UPDATE polls SET VOTES_C = ? WHERE ID = ?`,[data.VOTES_C,searchid],(error) => {
+							if (error) {
+								throw error;
+							}
+							votereel_vote += `${message.client.users.cache.get(voter).displayName} abstained\n`;
+							sendembed(data, votereel_vote);
+							if (!changing_vote) {
+								db.get(`SELECT * FROM polls_users WHERE USERID = ?`,[voter], (error, results) => {
+									if(error) {
+										return console.log(error);
+									}
+									
+									if(results != undefined) {
+										votearray = JSON.parse(results.VOTE_ARRAY);
+										
+										votearray.data.push(searchid);
+										
+										db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
+									} else {
+										db.run(`INSERT INTO polls_users (USERID, VOTE_ARRAY, CREATE_ARRAY) VALUES (?, ?, ?)`, [voter, `{"data":[]}`, `{"data":[]}`], (error) => {
+											votearray = JSON.parse(`{"data":[]}`);
+											
+											votearray.data.push(searchid);
+										
+											db.run(`UPDATE polls_users SET VOTE_ARRAY = ? WHERE USERID = ?`, [JSON.stringify(votearray), voter]);
+										});
+									}
+								});
+							} else {
+								return;
+							}
 						});
 					}
 					
