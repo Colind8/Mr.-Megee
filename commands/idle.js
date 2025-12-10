@@ -505,7 +505,7 @@ module.exports = {
 					}
 					
 					if (!(key.tree.includes(idle.upgradelist[upgrade].prereq)) && (upgrade != 0)) {
-						return message.channel.send("Upgrade unavalible.");
+						return message.channel.send("Upgrade unavailable.");
 					}
 					
 					if (key.tree.includes(upgrade)) {
@@ -2085,4 +2085,5 @@ function hypotheticalbuilder (key, hypoarg, hypoarg2) {
 	
 	return hypostring;
 	
+
 }
