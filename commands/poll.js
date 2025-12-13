@@ -819,7 +819,7 @@ module.exports = {
 					pos_c = parsed_votes_c.data.indexOf(voter);
 					
 					if (votechoice == "a") {
-						console.log("Arived here");
+						//console.log("Arived here");
 						if (parsed_votes_a.data.includes(voter) == true) {
 							return message.reply({content:"You already voted for this option!",ephemeral: true})
 						}
@@ -851,7 +851,7 @@ module.exports = {
 						
 						db.run("PRAGMA busy_timeout = 30000");
 						db.run(`UPDATE polls SET VOTES_A = ? WHERE ID = ?`,[data.VOTES_A,searchid],(error) => {
-							console.log("And here");
+							//console.log("And here");
 							if (error) {
 								throw error;
 							}
@@ -889,9 +889,9 @@ module.exports = {
 						}
 						if (changing_vote) {
 							if (pos_a != -1) {
-								console.log(`Splicing ${parsed_votes_a.data} at position ${pos_a}`);
+								//console.log(`Splicing ${parsed_votes_a.data} at position ${pos_a}`);
 								parsed_votes_a.data.splice(pos_a,1);
-								console.log(parsed_votes_a)
+								//console.log(parsed_votes_a)
 								data.VOTES_A = JSON.stringify(parsed_votes_a);
 								db.run(`UPDATE polls SET VOTES_A = ? WHERE ID = ?`,[data.VOTES_A,searchid],(error) => {
 									if (error) {
