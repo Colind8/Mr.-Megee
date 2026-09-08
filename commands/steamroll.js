@@ -11,10 +11,13 @@ module.exports = {
 	async execute(message) {
         const args = message.content.slice(prefix.length).trim().split(/ +/);
 	    const command = args.shift().toLowerCase();
+		const steam_api_key = config.steam_api_key;
 		
 		if(!args[0]) { //REQUEST ALL STEAM GAMES
 			try {
-				var response = await fetch("http://api.steampowered.com/ISteamApps/GetAppList/v2");
+				let rand = Math.floor(Math.random() * 9); // 0 to 4
+				rand = (rand * 500000)
+				var response = await fetch(`http://api.steampowered.com/IStoreService/GetAppList/v1/?key=${steam_api_key}&have_description_language=english&include_games=true&include_videos=false&last_appid=${rand}`);
 				var data = await response.json();
 				fetchgame(1,null);
 			} catch {
@@ -22,20 +25,21 @@ module.exports = {
 			}
 		} else if (!isNaN(parseInt(args[0]))) { //REQUEST USER STEAM GAMES by id
 			try {
-				var response = await fetch("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=E9FE5072AC6290BBC6BF94CC809123F4&steamid=" + args[0] + "&format=json");
+				var response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${steam_api_key}&steamid=${args[0]}&format=json`)
 				var data = await response.json();
 				fetchgame(2,args[0]);
 				
-			} catch {
+			} catch (err) {
+				console.log(err);
 				return message.channel.send("Invalid SteamID. Use the number or name in your Steam URL. Also, make sure games details are set to public.");
 			}
 			
 		} else { //REQUEST USER STEAM GAMES by vanityurl
 			try {
-				var steamid = await fetch ("http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=E9FE5072AC6290BBC6BF94CC809123F4&vanityurl=" + args[0]);
+				var steamid = await fetch (`https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=${steam_api_key}&vanityurl=${args[0]}`);
 				var datasteamid = await steamid.json();
 				
-				var response = await fetch("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=E9FE5072AC6290BBC6BF94CC809123F4&steamid=" + datasteamid.response.steamid + "&format=json");
+				var response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${steam_api_key}&steamid=${datasteamid.response.steamid}&format=json`);
 				var data = await response.json();
 				
 				fetchgame(3,datasteamid.response.steamid);
@@ -65,14 +69,14 @@ module.exports = {
 		async function fetchgame(id, input) {
 			switch (id) {
 				case 1:
-					var rand = Math.floor(Math.random() * data.applist.apps.length);
-					var game = data.applist.apps[rand];
+					var rand = Math.floor(Math.random() * data.response.apps.length);
+					var game = data.response.apps[rand];
 					await checkgame(game.appid).then(badgame => {
 						if (badgame == true) {
 							fetchgame(1,input);
 						} else {
 							var url = "https://store.steampowered.com/app/" + game.appid;
-							return message.channel.send("App " + rand + " of " + data.applist.apps.length + "\n" + url);
+							return message.channel.send(game.name + "\n" + url);
 						}
 						
 					});
@@ -89,7 +93,8 @@ module.exports = {
 								return message.channel.send("App " + rand + " of " + data.response.games.length + "\n" + url);
 							}
 						});
-					} catch {
+					} catch (err) {
+						console.log(err);
 						return message.channel.send("Invalid SteamID. Use the number or name in your Steam URL. Also, make sure games details are set to public.");
 					}
 					break;
